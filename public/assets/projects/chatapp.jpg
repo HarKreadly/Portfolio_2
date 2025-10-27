@@ -1,0 +1,45 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chatGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0891B2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#chatGradient)"/>
+
+  <!-- Chat Window -->
+  <rect x="50" y="30" width="300" height="240" fill="#ffffff" opacity="0.9" rx="12"/>
+
+  <!-- Chat Header -->
+  <rect x="50" y="30" width="300" height="40" fill="#f0f0f0" opacity="0.9" rx="12"/>
+
+  <!-- User Avatar -->
+  <circle cx="80" cy="80" r="15" fill="#3B82F6"/>
+  <circle cx="320" cy="80" r="15" fill="#10B981"/>
+
+  <!-- Messages -->
+  <rect x="70" y="110" width="120" height="25" fill="#3B82F6" opacity="0.8" rx="12"/>
+  <rect x="210" y="110" width="100" height="25" fill="#e0e0e0" opacity="0.8" rx="12"/>
+
+  <rect x="70" y="150" width="140" height="25" fill="#3B82F6" opacity="0.8" rx="12"/>
+  <rect x="230" y="150" width="80" height="25" fill="#e0e0e0" opacity="0.8" rx="12"/>
+
+  <rect x="70" y="190" width="110" height="25" fill="#3B82F6" opacity="0.8" rx="12"/>
+  <rect x="200" y="190" width="120" height="25" fill="#e0e0e0" opacity="0.8" rx="12"/>
+
+  <!-- Message Input -->
+  <rect x="60" y="240" width="220" height="20" fill="#f0f0f0" opacity="0.8" rx="10"/>
+
+  <!-- Send Button -->
+  <circle cx="330" cy="250" r="12" fill="#06B6D4"/>
+
+  <!-- Online Indicators -->
+  <circle cx="75" cy="75" r="3" fill="#10B981"/>
+  <circle cx="315" cy="75" r="3" fill="#10B981"/>
+
+  <!-- Floating Elements -->
+  <circle cx="150" cy="50" r="3" fill="#ffffff" opacity="0.6"/>
+  <circle cx="350" cy="100" r="4" fill="#ffffff" opacity="0.4"/>
+</svg>

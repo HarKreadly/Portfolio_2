@@ -1,0 +1,32 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="taskGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#taskGradient)"/>
+
+  <!-- Task Board -->
+  <rect x="50" y="50" width="300" height="200" fill="#ffffff" opacity="0.9" rx="8"/>
+
+  <!-- Task Cards -->
+  <rect x="70" y="80" width="80" height="40" fill="#10B981" opacity="0.8" rx="4"/>
+  <rect x="170" y="80" width="80" height="40" fill="#3B82F6" opacity="0.8" rx="4"/>
+  <rect x="270" y="80" width="80" height="40" fill="#EF4444" opacity="0.8" rx="4"/>
+
+  <rect x="70" y="140" width="80" height="40" fill="#8B5CF6" opacity="0.8" rx="4"/>
+  <rect x="170" y="140" width="80" height="40" fill="#F59E0B" opacity="0.8" rx="4"/>
+  <rect x="270" y="140" width="80" height="40" fill="#06B6D4" opacity="0.8" rx="4"/>
+
+  <!-- Progress Indicators -->
+  <circle cx="110" cy="180" r="8" fill="#10B981"/>
+  <circle cx="210" cy="180" r="8" fill="#3B82F6"/>
+  <circle cx="310" cy="180" r="8" fill="#EF4444"/>
+
+  <!-- Drag Handle -->
+  <rect x="60" y="100" width="3" height="20" fill="#cccccc" opacity="0.6"/>
+  <rect x="60" y="160" width="3" height="20" fill="#cccccc" opacity="0.6"/>
+</svg>

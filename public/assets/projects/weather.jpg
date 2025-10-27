@@ -1,0 +1,38 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="weatherGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284C7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#weatherGradient)"/>
+
+  <!-- Sky -->
+  <rect width="400" height="200" fill="#87CEEB" opacity="0.8"/>
+
+  <!-- Ground -->
+  <rect y="200" width="400" height="100" fill="#90EE90" opacity="0.7"/>
+
+  <!-- Sun -->
+  <circle cx="320" cy="60" r="30" fill="#FFD700"/>
+  <line x1="290" y1="30" x2="300" y2="40" stroke="#FFD700" stroke-width="3"/>
+  <line x1="350" y1="30" x2="340" y2="40" stroke="#FFD700" stroke-width="3"/>
+  <line x1="350" y1="90" x2="340" y2="80" stroke="#FFD700" stroke-width="3"/>
+  <line x1="290" y1="90" x2="300" y2="80" stroke="#FFD700" stroke-width="3"/>
+
+  <!-- Clouds -->
+  <circle cx="100" cy="80" r="20" fill="#ffffff" opacity="0.8"/>
+  <circle cx="120" cy="70" r="25" fill="#ffffff" opacity="0.8"/>
+  <circle cx="140" cy="80" r="20" fill="#ffffff" opacity="0.8"/>
+
+  <!-- Temperature Display -->
+  <rect x="50" y="150" width="80" height="40" fill="#ffffff" opacity="0.9" rx="8"/>
+  <text x="90" y="175" text-anchor="middle" fill="#0EA5E9" font-family="Arial" font-size="16" font-weight="bold">24°C</text>
+
+  <!-- Weather Icons -->
+  <circle cx="250" cy="150" r="8" fill="#ffffff" opacity="0.8"/>
+  <circle cx="270" cy="150" r="8" fill="#ffffff" opacity="0.8"/>
+  <circle cx="290" cy="150" r="8" fill="#ffffff" opacity="0.8"/>
+</svg>

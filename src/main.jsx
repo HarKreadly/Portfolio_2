@@ -1,12 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import SplitText from './components/SplitText'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+import App from "./App";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <div className="min-h-screen">
-      <SplitText text="Welcome to my Portfolio" />
-    </div>
-  </StrictMode>,
-)
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+);

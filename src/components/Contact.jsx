@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Tilt from "react-parallax-tilt";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -226,114 +227,122 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8">
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
-                Send a Message
-              </h3>
+            <Tilt
+              tiltMaxAngleX={2}
+              tiltMaxAngleY={2}
+              scale={1.01}
+              transitionSpeed={1000}
+              className="h-full"
+            >
+              <div className="bg-white dark:bg-gray-700 rounded-xl shadow-lg p-8 h-full">
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6">
+                  Send a Message
+                </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Field */}
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                  >
-                    {t("contact.form.name")} *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-600 text-gray-900 dark:text-white transition-colors"
-                    placeholder="Your Name"
-                    required
-                  />
-                </div>
-
-                {/* Email Field */}
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                  >
-                    {t("contact.form.email")} *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-600 text-gray-900 dark:text-white transition-colors"
-                    placeholder="your.email@example.com"
-                    required
-                  />
-                </div>
-
-                {/* Message Field */}
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                  >
-                    {t("contact.form.message")} *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    rows={5}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-600 text-gray-900 dark:text-white transition-colors resize-vertical"
-                    placeholder="Your message here..."
-                    required
-                  ></textarea>
-                </div>
-
-                {/* Submit Status */}
-                {submitStatus && (
-                  <div
-                    className={`flex items-center p-4 rounded-lg ${
-                      submitStatus === "success"
-                        ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
-                        : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
-                    }`}
-                  >
-                    {submitStatus === "success" ? (
-                      <CheckCircle size={20} className="mr-2" />
-                    ) : (
-                      <AlertCircle size={20} className="mr-2" />
-                    )}
-                    <span>
-                      {submitStatus === "success"
-                        ? t("contact.form.success")
-                        : t("contact.form.error")}
-                    </span>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name Field */}
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                      {t("contact.form.name")} *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-600 text-gray-900 dark:text-white transition-colors"
+                      placeholder="Your Name"
+                      required
+                    />
                   </div>
-                )}
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed flex items-center justify-center"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                      {t("contact.form.sending")}
-                    </>
-                  ) : (
-                    <>
-                      <Send size={20} className="mr-2" />
-                      {t("contact.form.send")}
-                    </>
+                  {/* Email Field */}
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                      {t("contact.form.email")} *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-600 text-gray-900 dark:text-white transition-colors"
+                      placeholder="your.email@example.com"
+                      required
+                    />
+                  </div>
+
+                  {/* Message Field */}
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                      {t("contact.form.message")} *
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows={5}
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-600 text-gray-900 dark:text-white transition-colors resize-vertical"
+                      placeholder="Your message here..."
+                      required
+                    ></textarea>
+                  </div>
+
+                  {/* Submit Status */}
+                  {submitStatus && (
+                    <div
+                      className={`flex items-center p-4 rounded-lg ${
+                        submitStatus === "success"
+                          ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200"
+                          : "bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200"
+                      }`}
+                    >
+                      {submitStatus === "success" ? (
+                        <CheckCircle size={20} className="mr-2" />
+                      ) : (
+                        <AlertCircle size={20} className="mr-2" />
+                      )}
+                      <span>
+                        {submitStatus === "success"
+                          ? t("contact.form.success")
+                          : t("contact.form.error")}
+                      </span>
+                    </div>
                   )}
-                </button>
-              </form>
-            </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed flex items-center justify-center"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        {t("contact.form.sending")}
+                      </>
+                    ) : (
+                      <>
+                        <Send size={20} className="mr-2" />
+                        {t("contact.form.send")}
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
+            </Tilt>
           </div>
         </div>
       </div>

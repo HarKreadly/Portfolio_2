@@ -1,19 +1,23 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
+import { ChevronDown, Github, Linkedin, Mail, Download } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitText from "./ui/SplitText";
-import CardNav from "./ui/CardNav";
-import Aurora from "./ui/Aurora";
-import Particles from "./ui/Particles";
 import ShinyText from "./ui/ShinyText";
+import FloatingLines from './ui/FloatingLines';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
+import { usePortfolioTheme } from "../hooks/useTheme";
+
+
+
 const HeroSection = () => {
   const { t } = useTranslation("common");
+  const { isDark } = usePortfolioTheme();
   const heroRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -47,77 +51,30 @@ const HeroSection = () => {
     }
   }, []);
 
-  const items = [
-    {
-      label: "About",
-      bgColor: "#0D0716",
-      textColor: "#fff",
-      links: [
-        { label: "My Story", href: "#about", ariaLabel: "Learn about me" },
-        { label: "Resume", href: "#resume", ariaLabel: "Download my resume" },
-      ],
-    },
-    {
-      label: "Work",
-      bgColor: "#170D27",
-      textColor: "#fff",
-      links: [
-        { label: "Projects", href: "#projects", ariaLabel: "View my projects" },
-        { label: "Skills", href: "#skills", ariaLabel: "View my skills" },
-      ],
-    },
-    {
-      label: "Contact",
-      bgColor: "#271E37",
-      textColor: "#fff",
-      links: [
-        { label: "Get In Touch", href: "#contact", ariaLabel: "Contact me" },
-        {
-          label: "LinkedIn",
-          href: "https://linkedin.com",
-          ariaLabel: "Connect on LinkedIn",
-        },
-      ],
-    },
-  ];
-
   return (
     <section
       id="home"
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-purple-900"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#0a0a0a] pt-20"
     >
-      {/* Aurora Background Overlay */}
+      {/* Floating Lines Background */}
       <div className="absolute inset-0 z-0">
-        <Aurora
-          colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
-          blend={0.3}
-          amplitude={1.0}
-          speed={0.5}
-        />
-      </div>
-
-      {/* Particles Background */}
-      <div className="absolute inset-0 z-5">
-        <Particles
-          particleColors={["#3A29FF", "#FF94B4", "#FF3232", "#ffffff"]}
-          particleCount={100}
-          particleSpread={5}
-          speed={0.05}
-          particleBaseSize={50}
-          moveParticlesOnHover={true}
-          alphaParticles={true}
-          disableRotation={false}
-          sizeRandomness={1.5}
+        <FloatingLines
+          linesGradient={isDark ? ["#38bdf8", "#818cf8", "#c084fc", "#e879f9"] : ["#0ea5e9", "#6366f1", "#a855f7", "#d946ef"]}
+          enabledWaves={['top', 'middle', 'bottom']}
+          lineCount={[5, 5, 5]}
+          lineDistance={[8, 6, 4]}
+          bendRadius={5.0}
+          bendStrength={-0.5}
+          interactive={true}
+          parallax={true}
+          mixBlendMode="normal"
         />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
         <div ref={contentRef} className="text-center max-w-4xl mx-auto">
-          {/* CardNav positioned at top */}
-          <div className="mb-12 flex justify-center">
-            <CardNav items={items} ease="power3.out" />
-          </div>
+          {/* Greeting */}
 
           {/* Greeting */}
           <div className="mb-6">
@@ -156,12 +113,25 @@ const HeroSection = () => {
             >
               {t("hero.cta.viewWork")}
             </Link>
-            <Link
-              to="#contact"
-              className="px-8 py-4 border-2 border-gray-400 dark:border-gray-500 text-gray-800 dark:text-gray-200 hover:border-blue-600 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 font-semibold rounded-full transition-all duration-300 drop-shadow-sm"
-            >
-              {t("hero.cta.getInTouch")}
-            </Link>
+            
+            <div className="flex gap-3">
+              <a
+                href="/cv_en.pdf"
+                download
+                className="flex items-center px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-white font-semibold rounded-full border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-md group"
+              >
+                <Download size={18} className="mr-2 group-hover:text-blue-500 transition-colors" />
+                CV (EN)
+              </a>
+              <a
+                href="/cv_de.pdf"
+                download
+                className="flex items-center px-6 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-800 dark:text-white font-semibold rounded-full border border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400 transition-all duration-300 hover:shadow-md group"
+              >
+                <Download size={18} className="mr-2 group-hover:text-blue-500 transition-colors" />
+                CV (DE)
+              </a>
+            </div>
           </div>
 
           {/* Social Links */}

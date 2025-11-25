@@ -1,9 +1,32 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Code2, Database, Wrench, Star, TrendingUp } from "lucide-react";
+import {
+  FaReact,
+  FaNodeJs,
+  FaGitAlt,
+  FaDocker,
+  FaAws,
+  FaFigma,
+  FaPython,
+  FaJava,
+} from "react-icons/fa";
+import {
+  SiJavascript,
+  SiTypescript,
+  SiHtml5,
+  SiCss3,
+  SiTailwindcss,
+  SiExpress,
+  SiMongodb,
+  SiPostgresql,
+  SiPhp,
+} from "react-icons/si";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { skills, skillCategories } from "../data/skills";
+import LogoLoop from "./ui/LogoLoop";
+import ScrollFloat from "./ui/ScrollFloat";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,26 +80,26 @@ const Skills = () => {
 
   const getIcon = (iconName) => {
     const icons = {
-      javascript: "🟨",
-      react: "⚛️",
-      typescript: "🔷",
-      html: "🌐",
-      css: "🎨",
-      tailwind: "💨",
-      nodejs: "🟢",
-      express: "⚡",
-      mongodb: "🍃",
-      postgresql: "🐘",
-      git: "📋",
-      docker: "🐳",
-      aws: "☁️",
-      figma: "🎭",
-      vscode: "💻",
-      python: "🐍",
-      java: "☕",
-      php: "🐘",
+      javascript: <SiJavascript className="text-yellow-400" />,
+      react: <FaReact className="text-blue-400" />,
+      typescript: <SiTypescript className="text-blue-600" />,
+      html: <SiHtml5 className="text-orange-500" />,
+      css: <SiCss3 className="text-blue-500" />,
+      tailwind: <SiTailwindcss className="text-cyan-400" />,
+      nodejs: <FaNodeJs className="text-green-500" />,
+      express: <SiExpress className="text-gray-500 dark:text-white" />,
+      mongodb: <SiMongodb className="text-green-500" />,
+      postgresql: <SiPostgresql className="text-blue-400" />,
+      git: <FaGitAlt className="text-orange-600" />,
+      docker: <FaDocker className="text-blue-500" />,
+      aws: <FaAws className="text-orange-500" />,
+      figma: <FaFigma className="text-purple-500" />,
+      vscode: <Code2 className="text-blue-500" />,
+      python: <FaPython className="text-blue-500" />,
+      java: <FaJava className="text-red-500" />,
+      php: <SiPhp className="text-purple-400" />,
     };
-    return icons[iconName] || "💻";
+    return icons[iconName] || <Code2 />;
   };
 
   const getCategoryIcon = (categoryId) => {
@@ -109,6 +132,24 @@ const Skills = () => {
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Here are the technologies and tools I use to bring ideas to life
             </p>
+          </div>
+
+          {/* Skills Marquee */}
+          <div className="mb-16">
+            <LogoLoop
+              logos={skills.map((skill) => ({
+                node: <div className="text-4xl mx-4">{getIcon(skill.icon)}</div>,
+                title: skill.name,
+              }))}
+              speed={40}
+              direction="left"
+              pauseOnHover={true}
+              logoHeight={50}
+              scaleOnHover={1.4}
+              fadeOut
+              fadeOutColor="#1d1d1dff"
+              gap={40}
+            />
           </div>
 
           {/* Skills Categories */}
@@ -174,10 +215,17 @@ const Skills = () => {
 
           {/* Call to Action */}
           <div className="mt-16 text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105">
-              <TrendingUp size={20} className="mr-2" />
+            <ScrollFloat
+              animationDuration={1}
+              ease="back.inOut(2)"
+              scrollStart="center bottom+=50%"
+              scrollEnd="bottom bottom-=40%"
+              stagger={0.03}
+              containerClassName="text-center"
+              textClassName="text-2xl md:text-3xl font-bold text-blue-600 dark:text-blue-400"
+            >
               Always Learning New Technologies
-            </div>
+            </ScrollFloat>
           </div>
         </div>
       </div>

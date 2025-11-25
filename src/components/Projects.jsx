@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { ExternalLink, Github, Filter } from "lucide-react";
+import { ExternalLink, Github, Filter, Search } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects, projectCategories } from "../data/projects";
@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Projects = () => {
   const { t } = useTranslation("common");
   const [activeFilter, setActiveFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredProjects, setFilteredProjects] = useState(projects);
   const sectionRef = useRef(null);
 
@@ -37,15 +38,18 @@ const Projects = () => {
   }, []);
 
   useEffect(() => {
-    if (activeFilter === "all") {
-      setFilteredProjects(projects);
-    }
-    else {
-      setFilteredProjects(
-        projects.filter((project) => project.category === activeFilter)
-      );
-    }
-  }, [activeFilter]);
+    const filtered = projects.filter((project) => {
+      const matchesCategory = activeFilter === "all" || project.category === activeFilter;
+      const matchesSearch =
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.technologies.some((tech) =>
+          tech.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      return matchesCategory && matchesSearch;
+    });
+    setFilteredProjects(filtered);
+  }, [activeFilter, searchQuery]);
 
   return (
     <section
@@ -65,6 +69,20 @@ const Projects = () => {
               Here are some of the projects I've worked on. Each one represents
               a unique challenge and learning experience.
             </p>
+
+            {/* Search Bar */}
+            <div className="max-w-md mx-auto mb-8 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search size={20} className="text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search projects..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-700 rounded-full leading-5 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm transition-all duration-300 shadow-sm"
+              />
+            </div>
 
             {/* Filter Buttons */}
             <div className="flex flex-wrap justify-center gap-4 mb-12">

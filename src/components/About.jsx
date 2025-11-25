@@ -103,11 +103,23 @@ const About = () => {
               </p>
 
               {/* Resume Download */}
-              <div className="pt-4">
-                <button className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+              <div className="pt-4 flex gap-3">
+                <a
+                  href="/cv_en.pdf"
+                  download
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+                >
                   <Download size={20} className="mr-2" />
-                  Download Resume
-                </button>
+                  CV (EN)
+                </a>
+                <a
+                  href="/cv_de.pdf"
+                  download
+                  className="inline-flex items-center px-6 py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-600 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                >
+                  <Download size={20} className="mr-2" />
+                  CV (DE)
+                </a>
               </div>
             </div>
 

@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
+import { motion, AnimatePresence } from "framer-motion";
 // use your own icon import if react-icons is not available
 import { GoArrowUpRight } from "react-icons/go";
 import ThemeToggle from "../ThemeToggle";
@@ -235,9 +236,12 @@ const CardNav = ({
             <h2 className="font-bold">Portfolio</h2>
           </div>
 
-          {/* Theme and Language Controls */}
+          {/* Theme, Language, and Search Controls */}
           <div className="hidden md:flex items-center space-x-2 order-3">
+
+
             <ThemeToggle />
+            <LanguageSelector />
           </div>
         </div>
 

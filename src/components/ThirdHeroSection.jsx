@@ -24,6 +24,7 @@ import LanguageSelector from "./LanguageSelector";
 
 import HKLogo from "./HKLogo";
 import TextPressure from "./ui/TextPressure";
+import { PiShareFat } from "react-icons/pi";
 
 const slides = [
   {
@@ -69,10 +70,11 @@ const ThirdHeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentQuote, setCurrentQuote] = useState(0);
   const [dateTime, setDateTime] = useState(new Date());
-  const [fontSize, setFontSize] = useState("md"); // sm, md, lg
+  const [fontSize, setFontSize] = useState("lg"); // sm, md, lg
   const [autoPlaySpeed, setAutoPlaySpeed] = useState(4); // seconds
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const [isMenuModalOpen, setIsMenuModal] = useState(false);
+  const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -128,15 +130,19 @@ const ThirdHeroSection = () => {
   // Font size classes mapping
   const fontSizes = {
     sm: {
-      title: "text-4xl md:text-7xl",
-      text: "text-xs",
-      quote: "text-[10px]",
+      title: "text-6xl md:text-9xl",
+      text: "text-sm",
+      quote: "text-xs",
     },
-    md: { title: "text-6xl md:text-9xl", text: "text-sm", quote: "text-xs" },
+    md: { 
+      title: "text-8xl md:text-[10rem]", 
+      text: "text-base", 
+      quote: "text-sm" 
+    },
     lg: {
-      title: "text-8xl md:text-[10rem]",
-      text: "text-base",
-      quote: "text-sm",
+      title: "text-9xl md:text-[12rem]",
+      text: "text-lg",
+      quote: "text-base",
     },
   };
 
@@ -197,7 +203,7 @@ const ThirdHeroSection = () => {
             </span>
           </div>
         </div>
-        <div className="hidden md:flex gap-12 font-sans uppercase text-xs font-bold">
+        <div className="hidden lg:flex gap-12 font-sans uppercase text-xs font-bold">
           <a
             href="#"
             className="hover:text-black dark:hover:text-white transition-colors"
@@ -230,25 +236,27 @@ const ThirdHeroSection = () => {
           </a>
         </div>
         <div className="flex gap-6 items-center">
-          <a
-            href="#"
-            className="hover:text-black dark:hover:text-white transition-colors"
-          >
-            <Linkedin size={20} />
-          </a>
-          <a
-            href="#"
-            className="hover:text-black dark:hover:text-white transition-colors"
-          >
-            <Instagram size={20} />
-          </a>
-          <a
-            href="#"
-            className="hover:text-black dark:hover:text-white transition-colors"
-          >
-            <Github size={20} />
-          </a>
-          <div className="w-[1px] h-6 bg-gray-300 dark:bg-gray-700 mx-2"></div>
+          <div className="hidden min-[475px]:flex gap-6 items-center">
+            <a
+              href="#"
+              className="hover:text-black dark:hover:text-white transition-colors"
+            >
+              <Linkedin size={20} />
+            </a>
+            <a
+              href="#"
+              className="hover:text-black dark:hover:text-white transition-colors"
+            >
+              <Instagram size={20} />
+            </a>
+            <a
+              href="#"
+              className="hover:text-black dark:hover:text-white transition-colors"
+            >
+              <Github size={20} />
+            </a>
+            <div className="w-[1px] h-6 bg-gray-300 dark:bg-gray-700 mx-2"></div>
+          </div>
           <LanguageSelector />
         </div>
       </nav>
@@ -256,32 +264,32 @@ const ThirdHeroSection = () => {
       {/* Main Content Grid */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[100dvh] pt-20 pb-10 px-4 md:px-8 lg:px-16 gap-8 items-center">
         {/* Left Section */}
-        <div className="lg:col-span-3 flex flex-col h-full py-6 lg:py-12 order-3 lg:order-1 px-4 md:px-8 lg:pl-8 relative z-40 items-center lg:items-start">
-          {/* Top Numbers (Functional: Auto-play Speed) */}
-          <div className="mb-20 hidden lg:block">
-            <span className="block text-xs font-bold tracking-widest text-gray-900 dark:text-white mb-4 uppercase">
-              Speed
-            </span>
-            <div className="text-sm tracking-[0.5em] text-gray-500 dark:text-gray-500 font-light flex gap-4">
-              {[16, 8, 4, 2].map((num) => (
-                <button
-                  key={num}
-                  onClick={() => setAutoPlaySpeed(num)}
-                  className={`transition-colors hover:text-black dark:hover:text-white ${
-                    autoPlaySpeed === num
-                      ? "text-black dark:text-white font-bold"
-                      : ""
-                  }`}
-                >
-                  {num}
-                </button>
-              ))}
+        <div className="lg:col-span-3 flex flex-col h-full py-6 lg:py-12 order-3 lg:order-1 px-4 md:px-8 lg:pl-8 relative z-40 items-center lg:items-start gap-8">
+          {/* Speed & Size Controls - Desktop Only */}
+          <div className="mb-auto hidden lg:flex lg:flex-col lg:gap-20">
+            {/* Speed */}
+            <div>
+              <span className="block text-xs font-bold tracking-widest text-gray-900 dark:text-white mb-4 uppercase">
+                Speed
+              </span>
+              <div className="text-sm tracking-[0.5em] text-gray-500 dark:text-gray-500 font-light flex gap-4">
+                {[16, 8, 4, 2].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setAutoPlaySpeed(num)}
+                    className={`transition-colors hover:text-black dark:hover:text-white ${
+                      autoPlaySpeed === num
+                        ? "text-black dark:text-white font-bold"
+                        : ""
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Controls Container (A's) */}
-          <div className="flex gap-16 mb-auto hidden lg:flex">
-            {/* Font Size Control (Vertical with Line) */}
+            {/* Size */}
             <div className="flex flex-col gap-4">
               <span className="block text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase">
                 Size
@@ -323,40 +331,131 @@ const ThirdHeroSection = () => {
               </div>
             </div>
           </div>
-          {/* Navigation Buttons (Restored) */}
-          <div className="flex flex-row lg:flex-col gap-6 mt-8 mb-12 lg:mb-0">
+
+          {/* Speed & Size Controls - Mobile/Tablet/Small Laptop */}
+          <div className="lg:hidden w-full flex gap-4">
+            {/* Speed */}
+            <div className="flex-1 backdrop-blur-sm bg-gray-100/30 dark:bg-white/5 rounded-lg p-4 flex flex-col items-center gap-3">
+              <span className="block text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase">
+                Speed
+              </span>
+              <div className="text-sm tracking-[0.3em] text-gray-500 dark:text-gray-500 font-light flex gap-3 justify-center">
+                {[16, 8, 4, 2].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => setAutoPlaySpeed(num)}
+                    className={`transition-colors hover:text-black dark:hover:text-white ${
+                      autoPlaySpeed === num
+                        ? "text-black dark:text-white font-bold"
+                        : ""
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Size */}
+            <div className="flex-1 backdrop-blur-sm bg-gray-100/30 dark:bg-white/5 rounded-lg p-4 flex flex-col items-center gap-3">
+              <span className="block text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase">
+                Size
+              </span>
+              <div className="flex gap-4 items-end justify-center">
+                <button
+                  onClick={() => setFontSize("lg")}
+                  className={`text-3xl leading-none transition-colors ${
+                    fontSize === "lg"
+                      ? "text-gray-900 dark:text-white font-normal"
+                      : "text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white font-light"
+                  }`}
+                >
+                  A
+                </button>
+                <button
+                  onClick={() => setFontSize("md")}
+                  className={`text-2xl leading-none transition-colors ${
+                    fontSize === "md"
+                      ? "text-gray-900 dark:text-white font-normal"
+                      : "text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white font-light"
+                  }`}
+                >
+                  A
+                </button>
+                <button
+                  onClick={() => setFontSize("sm")}
+                  className={`text-lg leading-none transition-colors ${
+                    fontSize === "sm"
+                      ? "text-gray-900 dark:text-white font-normal"
+                      : "text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white font-light"
+                  }`}
+                >
+                  A
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* Navigation Buttons - Desktop Only */}
+          <div className="hidden lg:flex lg:flex-col gap-6">
             <button
               onClick={prevSlide}
-              className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-gray-200/50 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-300/50 dark:hover:bg-white/20 transition-all duration-300 group"
+              className="w-14 h-14 rounded-full bg-gray-200/50 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-300/50 dark:hover:bg-white/20 transition-all duration-300 group"
             >
               <ArrowLeft
-                size={18}
-                className="group-hover:-translate-x-1 transition-transform lg:w-5 lg:h-5"
+                size={20}
+                className="group-hover:-translate-x-1 transition-transform"
               />
             </button>
             <button
               onClick={nextSlide}
-              className="w-12 h-12 lg:w-14 lg:h-14 lg:ml-4 rounded-full bg-gray-900 text-white dark:bg-white dark:text-black flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg"
+              className="w-14 h-14 ml-4 rounded-full bg-gray-900 text-white dark:bg-white dark:text-black flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg"
             >
-              <ArrowRight size={18} className="lg:w-5 lg:h-5" />
+              <ArrowRight size={20} />
             </button>
           </div>
 
-          {/* Date & Quote & Navigation */}
-          <div className="mt-auto w-full flex flex-col items-center lg:items-start text-center lg:text-left">
-            <div className="flex flex-col items-center lg:items-start gap-6 mb-8">
-              <div className="text-2xl font-serif">
+          {/* Date & Time - Mobile/Tablet/Small Laptop */}
+          <div className="lg:hidden w-full backdrop-blur-sm bg-gray-100/30 dark:bg-white/5 rounded-lg p-6 flex flex-col gap-6">
+            {/* Date */}
+            <div className="flex flex-col gap-2">
+              <span className="text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase text-center">
+                Date
+              </span>
+              <div className="text-2xl font-serif text-center">
                 <span className="font-normal text-gray-900 dark:text-white">
                   {day}
                 </span>{" "}
                 <span className="text-gray-500 dark:text-gray-400 font-light">
                   of
                 </span>{" "}
-                {month} <br />
-                <span className="text-base text-gray-900 dark:text-white font-normal block text-right">
+                {month}
+                <span className="text-base text-gray-900 dark:text-white font-normal ml-2">
                   {year}
                 </span>
               </div>
+            </div>
+
+            {/* Time */}
+            <div className="flex flex-col gap-2">
+              <span className="text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase text-center">
+                Time
+              </span>
+              <div className="text-center">
+                <span className="text-3xl font-light text-gray-900 dark:text-white tracking-tighter flex items-baseline gap-2 justify-center">
+                  <span>
+                    <span className="font-bold">{hours}</span>:{minutes}
+                  </span>
+                  <span className="text-xl text-gray-500 dark:text-gray-400 font-normal">
+                    {ampm}
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Quote & Navigation */}
+          <div className="mt-auto w-full flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className="flex flex-col items-center lg:items-start gap-6 mb-8">
               <div className="flex gap-4">
                 <button
                   onClick={prevQuote}
@@ -379,13 +478,13 @@ const ThirdHeroSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.5 }}
-                className="relative pt-6 pb-6 px-2"
+                className="relative pt-8 pb-8 px-6 backdrop-blur-sm bg-gray-100/30 dark:bg-white/5 rounded-lg w-full lg:w-auto"
               >
-                <FaQuoteLeft className="absolute top-0 left-0 text-gray-400 dark:text-gray-500 opacity-80" size={16} />
-                <p className={`${fontSizes[fontSize].quote} text-gray-600 dark:text-gray-400 leading-relaxed max-w-[250px] lg:max-w-[200px] text-center lg:text-left mx-auto lg:mx-0`}>
+                <FaQuoteLeft className="absolute top-2 left-2 text-gray-400 dark:text-gray-500 opacity-60" size={24} />
+                <p className={`${fontSizes[fontSize].quote} text-gray-600 dark:text-gray-400 leading-relaxed text-center lg:text-left`}>
                   {slides[currentQuote].quote}
                 </p>
-                <FaQuoteRight className="absolute bottom-0 right-0 text-gray-400 dark:text-gray-500 opacity-80" size={16} />
+                <FaQuoteRight className="absolute bottom-2 right-2 text-gray-400 dark:text-gray-500 opacity-60" size={24} />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -418,7 +517,7 @@ const ThirdHeroSection = () => {
             {/* Title Overlay - STATIC (No Animation) */}
             {/* Title Overlay - TextPressure */}
             <div className="absolute z-50 text-center flex flex-col items-center pointer-events-none w-full h-full justify-center">
-              <div className="w-[300px] md:w-[600px] h-[100px] md:h-[200px]">
+              <div className="w-[300px] md:w-[700px] lg:w-[600px] h-[100px] md:h-[200px]">
                 <TextPressure
                   text="PORTFOLIO"
                   flex={true}
@@ -474,6 +573,25 @@ const ThirdHeroSection = () => {
               />
             ))}
           </div>
+
+          {/* Navigation Buttons - Mobile/Tablet/Small Laptop */}
+          <div className="lg:hidden flex gap-6 mt-6">
+            <button
+              onClick={prevSlide}
+              className="w-12 h-12 rounded-full bg-gray-200/50 dark:bg-white/10 backdrop-blur-sm flex items-center justify-center text-gray-900 dark:text-white hover:bg-gray-300/50 dark:hover:bg-white/20 transition-all duration-300 group"
+            >
+              <ArrowLeft
+                size={18}
+                className="group-hover:-translate-x-1 transition-transform"
+              />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="w-12 h-12 rounded-full bg-gray-900 text-white dark:bg-white dark:text-black flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg"
+            >
+              <ArrowRight size={18} />
+            </button>
+          </div>
         </div>
 
         {/* Right Section */}
@@ -503,12 +621,35 @@ const ThirdHeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col items-center lg:items-end"
+            className="flex flex-col items-center lg:items-end gap-8"
           >
+            {/* Date */}
+            <div className="hidden lg:flex flex-col gap-2">
+              <span className="text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase text-center lg:text-right">
+                Date
+              </span>
+              <div className="text-2xl font-serif text-center lg:text-right">
+              <span className="font-normal text-gray-900 dark:text-white">
+                {day}
+              </span>{" "}
+              <span className="text-gray-500 dark:text-gray-400 font-light">
+                of
+              </span>{" "}
+              {month}
+              <span className="text-base text-gray-900 dark:text-white font-normal ml-2">
+                {year}
+              </span>
+            </div>
+            </div>
+            
             {/* Clock */}
-            <div className="flex items-center gap-4 text-gray-600 dark:text-gray-300">
-              <div className="text-right">
-                <span className="text-5xl md:text-6xl font-light text-gray-900 dark:text-white tracking-tighter flex items-baseline gap-2 justify-end">
+            <div className="hidden lg:flex flex-col gap-2">
+              <span className="text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase text-center lg:text-right">
+                Time
+              </span>
+              <div className="flex items-center gap-4 text-gray-600 dark:text-gray-300">
+              <div className="text-center lg:text-right">
+                <span className="text-5xl md:text-6xl font-light text-gray-900 dark:text-white tracking-tighter flex items-baseline gap-2 justify-center lg:justify-end">
                   <span>
                     <span className="font-bold">{hours}</span>:{minutes}
                   </span>
@@ -521,6 +662,7 @@ const ThirdHeroSection = () => {
                 </span>
               </div>
             </div>
+            </div>
           </motion.div>
         </div>
       </div>
@@ -532,52 +674,56 @@ const ThirdHeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 dark:bg-black/95 backdrop-blur-xl"
             onClick={() => setIsCVModalOpen(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-2xl max-w-sm w-full mx-4 border border-gray-200 dark:border-gray-800"
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full h-full flex flex-col items-center justify-center relative overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <button
+                onClick={() => setIsCVModalOpen(false)}
+                className="absolute top-8 right-8 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
+                <X size={32} />
+              </button>
+
+              <div className="space-y-12">
+                {/* Title */}
+                <h3 className="text-sm uppercase tracking-[0.3em] text-center text-gray-500 font-sans">
                   Download CV
                 </h3>
-                <button
-                  onClick={() => setIsCVModalOpen(false)}
-                  className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-              <div className="flex flex-col gap-4">
-                <a
-                  href="#"
-                  className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group"
-                >
-                  <span className="font-medium text-gray-900 dark:text-white">
-                    English Version
-                  </span>
-                  <Download
-                    size={18}
-                    className="text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
-                  />
-                </a>
-                <a
-                  href="#"
-                  className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group"
-                >
-                  <span className="font-medium text-gray-900 dark:text-white">
-                    French Version
-                  </span>
-                  <Download
-                    size={18}
-                    className="text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
-                  />
-                </a>
+
+                {/* Download Links */}
+                <div className="flex flex-col gap-6 min-w-[400px]">
+                  <a
+                    href="#"
+                    className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
+                  >
+                    <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
+                      English Version
+                    </span>
+                    <Download
+                      size={16}
+                      className="text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors ml-auto"
+                    />
+                  </a>
+                  <a
+                    href="#"
+                    className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
+                  >
+                    <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
+                      French Version
+                    </span>
+                    <Download
+                      size={16}
+                      className="text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors ml-auto"
+                    />
+                  </a>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -639,26 +785,101 @@ const ThirdHeroSection = () => {
 
                 <div className="w-64 h-[1px] bg-gray-200 dark:bg-gray-800 mx-auto"></div>
 
-                {/* Settings */}
-                <div className="flex justify-center gap-12">
-                  {/* Theme Toggle */}
-                  <div className="flex flex-col items-center gap-4">
-                    <span className="text-sm uppercase tracking-widest text-gray-500">
-                      Theme
+                {/* Social Media Links */}
+                <div className="flex justify-center gap-8 mt-12">
+                  <a
+                    href="#"
+                    className="p-4 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 transition-colors text-gray-900 dark:text-white"
+                  >
+                    <Linkedin size={24} />
+                  </a>
+                  <a
+                    href="#"
+                    className="p-4 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 transition-colors text-gray-900 dark:text-white"
+                  >
+                    <Instagram size={24} />
+                  </a>
+                  <a
+                    href="#"
+                    className="p-4 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 transition-colors text-gray-900 dark:text-white"
+                  >
+                    <Github size={24} />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Follow Modal */}
+      <AnimatePresence>
+        {isFollowModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 dark:bg-black/95 backdrop-blur-xl"
+            onClick={() => setIsFollowModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full h-full flex flex-col items-center justify-center relative overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setIsFollowModalOpen(false)}
+                className="absolute top-8 right-8 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
+                <X size={32} />
+              </button>
+
+              <div className="space-y-12">
+                {/* Title */}
+                <h3 className="text-sm uppercase tracking-[0.3em] text-center text-gray-500 font-sans">
+                  Follow Me
+                </h3>
+
+                {/* Social Media Links */}
+                <div className="flex flex-col gap-6 min-w-[400px]">
+                  <a
+                    href="#"
+                    className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
+                  >
+                    <Linkedin size={20} className="text-gray-900 dark:text-white" />
+                    <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
+                      LinkedIn
                     </span>
-                    <button
-                      onClick={() =>
-                        setTheme(theme === "dark" ? "light" : "dark")
-                      }
-                      className="p-4 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                    >
-                      {theme === "dark" ? (
-                        <Sun size={24} />
-                      ) : (
-                        <Moon size={24} />
-                      )}
-                    </button>
-                  </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
+                  >
+                    <Instagram size={20} className="text-gray-900 dark:text-white" />
+                    <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
+                      Instagram
+                    </span>
+                  </a>
+                  <a
+                    href="#"
+                    className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
+                  >
+                    <Github size={20} className="text-gray-900 dark:text-white" />
+                    <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
+                      GitHub
+                    </span>
+                  </a>
+                  <a
+                    href="#"
+                    className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
+                  >
+                    <Twitter size={20} className="text-gray-900 dark:text-white" />
+                    <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
+                      Twitter
+                    </span>
+                  </a>
                 </div>
               </div>
             </motion.div>

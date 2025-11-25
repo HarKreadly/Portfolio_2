@@ -36,13 +36,18 @@ const LanguageSelector = () => {
 
   return (
     <>
-      <button
+      <div
         onClick={() => setIsOpen(true)}
-        className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-        aria-label="Select language"
+        className="flex gap-3 items-center cursor-pointer group"
       >
-        <MdOutlineTranslate size={20} className="text-gray-600 dark:text-gray-300" />
-      </button>
+        <span className="text-gray-900 hidden dark:text-white font-sans uppercase text-xs font-bold tracking-widest group-hover:opacity-70 transition-opacity">
+          Translate
+        </span>
+        <div className="p-2 rounded-full bg-gray-100 dark:bg-white/10 group-hover:bg-gray-200 dark:group-hover:bg-white/20 transition-colors">
+          <MdOutlineTranslate size={20} className="text-gray-900 dark:text-white" />
+        </div>
+      </div>
+
 
       <AnimatePresence>
         {isOpen && (
@@ -51,39 +56,55 @@ const LanguageSelector = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-white/95 dark:bg-black/95 backdrop-blur-xl"
+            onClick={() => setIsOpen(false)}
           >
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-8 right-8 p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full h-full flex flex-col items-center justify-center relative overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X size={32} />
-            </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute top-8 right-8 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
+                <X size={32} />
+              </button>
 
-            <div className="grid grid-cols-3 gap-4 w-full max-w-md px-6">
-              <div className="col-span-3 text-center mb-8">
-                <h2 className="text-3xl font-serif font-bold text-gray-900 dark:text-white tracking-widest uppercase">
+              <div className="space-y-12">
+                {/* Title */}
+                <h3 className="text-sm uppercase tracking-[0.3em] text-center text-gray-500 font-sans">
                   Select Language
-                </h2>
+                </h3>
+
+                {/* Language Buttons */}
+                <div className="flex flex-col gap-6 min-w-[400px]">
+                  {languages.map((language) => (
+                    <motion.button
+                      key={language.code}
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.1 }}
+                      onClick={() => handleLanguageChange(language.code)}
+                      className={`group flex items-center justify-center gap-4 px-8 py-6 backdrop-blur-sm rounded-md transition-all duration-300 ${
+                        i18n.language === language.code
+                          ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
+                          : "bg-gray-100/50 dark:bg-white/10 hover:bg-gray-200/50 dark:hover:bg-white/20"
+                      }`}
+                    >
+                      <span className={`font-sans uppercase text-xs font-bold tracking-widest ${
+                        i18n.language === language.code
+                          ? "text-white dark:text-gray-900"
+                          : "text-gray-900 dark:text-white"
+                      }`}>
+                        {language.name}
+                      </span>
+                    </motion.button>
+                  ))}
+                </div>
               </div>
-              {languages.map((language) => (
-                <motion.button
-                  key={language.code}
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.1 }}
-                  onClick={() => handleLanguageChange(language.code)}
-                  className={`flex items-center justify-center py-6 rounded-none border transition-all duration-300 ${
-                    i18n.language === language.code
-                      ? "border-gray-900 dark:border-white bg-gray-900 dark:bg-white text-white dark:text-gray-900"
-                      : "border-gray-200 dark:border-gray-800 hover:border-gray-900 dark:hover:border-white text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <span className="text-xl font-bold tracking-widest">
-                    {language.name}
-                  </span>
-                </motion.button>
-              ))}
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

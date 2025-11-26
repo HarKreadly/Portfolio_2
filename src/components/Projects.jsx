@@ -4,7 +4,7 @@ import { ExternalLink, Github, Filter, Search } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects, projectCategories } from "../data/projects";
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "./ui/ProjectCard";
 
 gsap.registerPlugin(ScrollTrigger);
 

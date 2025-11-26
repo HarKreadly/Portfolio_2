@@ -15,7 +15,7 @@ const Footer = () => {
       </div>
 
       {/* Layer 1: Blur Overlay */}
-      <div className="absolute inset-0 z-0 backdrop-blur-[30px] bg-white/10 dark:bg-black/60 transition-colors duration-500"></div>
+      <div className="absolute inset-0 z-0 backdrop-blur-[100px] bg-white/10 dark:bg-black/30 transition-colors duration-500"></div>
 
       {/* Layer 2: Vignette */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(255,255,255,0.8)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,1)_100%)] pointer-events-none transition-all duration-500"></div>

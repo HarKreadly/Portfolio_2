@@ -1,4 +1,3 @@
-import HeroSection from '../components/HeroSection';
 import About from '../components/About';
 import ThirdHeroSection from '../components/ThirdHeroSection';
 import Skills from '../components/Skills';
@@ -9,7 +8,6 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <main>
-        {/* <HeroSection /> */}
         <ThirdHeroSection />
         <About />
         <Skills />

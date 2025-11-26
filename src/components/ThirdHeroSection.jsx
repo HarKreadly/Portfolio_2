@@ -21,8 +21,8 @@ import image2 from "../assets/image_2.jpg";
 import image3 from "../assets/image_3.jpg";
 import { useTheme } from "next-themes";
 import LanguageSelector from "./LanguageSelector";
+import ProjectCard from "./ui/ProjectCard";
 
-import HKLogo from "./HKLogo";
 import TextPressure from "./ui/TextPressure";
 import { PiShareFat } from "react-icons/pi";
 
@@ -134,10 +134,10 @@ const ThirdHeroSection = () => {
       text: "text-sm",
       quote: "text-xs",
     },
-    md: { 
-      title: "text-8xl md:text-[10rem]", 
-      text: "text-base", 
-      quote: "text-sm" 
+    md: {
+      title: "text-8xl md:text-[10rem]",
+      text: "text-base",
+      quote: "text-sm",
     },
     lg: {
       title: "text-9xl md:text-[12rem]",
@@ -480,11 +480,19 @@ const ThirdHeroSection = () => {
                 transition={{ duration: 0.5 }}
                 className="relative pt-8 pb-8 px-6 backdrop-blur-sm bg-gray-100/30 dark:bg-white/5 rounded-lg w-full lg:w-auto"
               >
-                <FaQuoteLeft className="absolute top-2 left-2 text-gray-400 dark:text-gray-500 opacity-60" size={24} />
-                <p className={`${fontSizes[fontSize].quote} text-gray-600 dark:text-gray-400 leading-relaxed text-center lg:text-left`}>
+                <FaQuoteLeft
+                  className="absolute top-2 left-2 text-gray-400 dark:text-gray-500 opacity-60"
+                  size={24}
+                />
+                <p
+                  className={`${fontSizes[fontSize].quote} text-gray-600 dark:text-gray-400 leading-relaxed text-center lg:text-left`}
+                >
                   {slides[currentQuote].quote}
                 </p>
-                <FaQuoteRight className="absolute bottom-2 right-2 text-gray-400 dark:text-gray-500 opacity-60" size={24} />
+                <FaQuoteRight
+                  className="absolute bottom-2 right-2 text-gray-400 dark:text-gray-500 opacity-60"
+                  size={24}
+                />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -629,39 +637,39 @@ const ThirdHeroSection = () => {
                 Date
               </span>
               <div className="text-2xl font-serif text-center lg:text-right">
-              <span className="font-normal text-gray-900 dark:text-white">
-                {day}
-              </span>{" "}
-              <span className="text-gray-500 dark:text-gray-400 font-light">
-                of
-              </span>{" "}
-              {month}
-              <span className="text-base text-gray-900 dark:text-white font-normal ml-2">
-                {year}
-              </span>
+                <span className="font-normal text-gray-900 dark:text-white">
+                  {day}
+                </span>{" "}
+                <span className="text-gray-500 dark:text-gray-400 font-light">
+                  of
+                </span>{" "}
+                {month}
+                <span className="text-base text-gray-900 dark:text-white font-normal ml-2">
+                  {year}
+                </span>
+              </div>
             </div>
-            </div>
-            
+
             {/* Clock */}
             <div className="hidden lg:flex flex-col gap-2">
               <span className="text-xs font-bold tracking-widest text-gray-900 dark:text-white uppercase text-center lg:text-right">
                 Time
               </span>
               <div className="flex items-center gap-4 text-gray-600 dark:text-gray-300">
-              <div className="text-center lg:text-right">
-                <span className="text-5xl md:text-6xl font-light text-gray-900 dark:text-white tracking-tighter flex items-baseline gap-2 justify-center lg:justify-end">
-                  <span>
-                    <span className="font-bold">{hours}</span>:{minutes}
+                <div className="text-center lg:text-right">
+                  <span className="text-5xl md:text-6xl font-light text-gray-900 dark:text-white tracking-tighter flex items-baseline gap-2 justify-center lg:justify-end">
+                    <span>
+                      <span className="font-bold">{hours}</span>:{minutes}
+                    </span>
+                    <span className="text-2xl text-gray-500 dark:text-gray-400 font-normal">
+                      {ampm}
+                    </span>
                   </span>
-                  <span className="text-2xl text-gray-500 dark:text-gray-400 font-normal">
-                    {ampm}
+                  <span className="text-xl text-gray-500 font-light tracking-widest mt-1 block">
+                    {seconds}
                   </span>
-                </span>
-                <span className="text-xl text-gray-500 font-light tracking-widest mt-1 block">
-                  {seconds}
-                </span>
+                </div>
               </div>
-            </div>
             </div>
           </motion.div>
         </div>
@@ -848,7 +856,10 @@ const ThirdHeroSection = () => {
                     href="#"
                     className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
                   >
-                    <Linkedin size={20} className="text-gray-900 dark:text-white" />
+                    <Linkedin
+                      size={20}
+                      className="text-gray-900 dark:text-white"
+                    />
                     <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
                       LinkedIn
                     </span>
@@ -857,7 +868,10 @@ const ThirdHeroSection = () => {
                     href="#"
                     className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
                   >
-                    <Instagram size={20} className="text-gray-900 dark:text-white" />
+                    <Instagram
+                      size={20}
+                      className="text-gray-900 dark:text-white"
+                    />
                     <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
                       Instagram
                     </span>
@@ -866,7 +880,10 @@ const ThirdHeroSection = () => {
                     href="#"
                     className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
                   >
-                    <Github size={20} className="text-gray-900 dark:text-white" />
+                    <Github
+                      size={20}
+                      className="text-gray-900 dark:text-white"
+                    />
                     <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
                       GitHub
                     </span>
@@ -875,7 +892,10 @@ const ThirdHeroSection = () => {
                     href="#"
                     className="group flex items-center gap-4 px-8 py-6 backdrop-blur-sm bg-gray-100/50 dark:bg-white/10 rounded-md hover:bg-gray-200/50 dark:hover:bg-white/20 transition-all duration-300"
                   >
-                    <Twitter size={20} className="text-gray-900 dark:text-white" />
+                    <Twitter
+                      size={20}
+                      className="text-gray-900 dark:text-white"
+                    />
                     <span className="font-sans uppercase text-xs font-bold tracking-widest text-gray-900 dark:text-white">
                       Twitter
                     </span>

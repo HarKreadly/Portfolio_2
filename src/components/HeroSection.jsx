@@ -66,7 +66,7 @@ const slides = [
   },
 ];
 
-const ThirdHeroSection = () => {
+const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentQuote, setCurrentQuote] = useState(0);
   const [dateTime, setDateTime] = useState(new Date());
@@ -147,7 +147,7 @@ const ThirdHeroSection = () => {
   };
 
   return (
-    <div className="relative w-full min-h-[100dvh] bg-gray-50  dark:bg-black text-gray-900 dark:text-white overflow-hidden font-serif transition-colors duration-1000">
+    <div className="relative w-full min-h-dvh bg-gray-50  dark:bg-black text-gray-900 dark:text-white overflow-hidden font-serif transition-colors duration-1000">
       {/* Layer 0: Full Screen Background Image */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -220,13 +220,13 @@ const ThirdHeroSection = () => {
             href="#"
             className="hover:text-black dark:hover:text-white transition-colors"
           >
-            Requests
+            Skills
           </a>
           <a
             href="#"
             className="hover:text-black dark:hover:text-white transition-colors"
           >
-            Photos
+            Projects
           </a>
           <a
             href="#"
@@ -910,4 +910,4 @@ const ThirdHeroSection = () => {
   );
 };
 
-export default ThirdHeroSection;
+export default HeroSection;

@@ -67,7 +67,7 @@ const Skills = () => {
         },
       });
 
-      // --- Scene 1: Intro (Black) ---
+      // --- Scene 1: Intro ---
       tl.fromTo(
         ".intro-content",
         { opacity: 0, scale: 0.9 },
@@ -75,8 +75,7 @@ const Skills = () => {
       )
       .to(".intro-content", { opacity: 0, scale: 1.1, duration: 1 });
 
-      // --- Scene 2: Frontend (White) ---
-      // Reveal white background
+      // --- Scene 2: Frontend ---
       tl.fromTo(
         ".scene-frontend",
         { clipPath: "circle(0% at 50% 50%)" },
@@ -84,14 +83,12 @@ const Skills = () => {
         "-=0.5"
       );
 
-      // Uncover Title
       tl.fromTo(
         ".title-frontend",
         { y: 100, opacity: 0 },
         { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
       );
 
-      // Cards Fly In from Sides
       tl.fromTo(
         ".card-frontend",
         {
@@ -107,18 +104,15 @@ const Skills = () => {
         }
       );
 
-      // Hold Frontend Scene
       tl.to({}, { duration: 1 });
 
-      // --- Scene 3: Transition to Backend (Black) ---
-      // Frontend scene moves right
+      // --- Scene 3: Transition to Backend ---
       tl.to(".scene-frontend", {
         x: "100%",
         duration: 1.5,
         ease: "power2.inOut",
       });
 
-      // Backend content reveals (it's underneath)
       tl.fromTo(
         ".scene-backend",
         { opacity: 0, scale: 0.9 },
@@ -126,43 +120,36 @@ const Skills = () => {
         "-=1"
       );
 
-      // Backend Cards Animate Up
       tl.fromTo(
         ".card-backend",
         { y: 100, opacity: 0 },
         { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }
       );
 
-      // Hold Backend Scene
       tl.to({}, { duration: 1 });
 
-      // --- Scene 4: Tools (White) ---
-      // Tools scene slides in from right
+      // --- Scene 4: Tools ---
       tl.fromTo(
         ".scene-tools",
         { x: "100%" },
         { x: "0%", duration: 1.5, ease: "power2.inOut" }
       );
 
-      // Tools Cards Fly In from Bottom
       tl.fromTo(
         ".card-tools",
         { y: 100, opacity: 0 },
         { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }
       );
 
-      // Hold Tools Scene
       tl.to({}, { duration: 1 });
 
-      // --- Scene 5: Outro (Black) ---
-      // Outro slides in from right
+      // --- Scene 5: Outro ---
       tl.fromTo(
         ".scene-outro",
         { x: "100%" },
         { x: "0%", duration: 1.5, ease: "power2.inOut" }
       );
 
-      // Outro Text Reveal
       tl.fromTo(
         ".outro-text",
         { scale: 0.5, opacity: 0 },
@@ -175,38 +162,38 @@ const Skills = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative bg-[#020202] text-white">
+    <section ref={containerRef} className="relative bg-gray-50 dark:bg-[#020202] text-gray-900 dark:text-white transition-colors duration-1000">
       <div ref={triggerRef} className="h-screen w-full overflow-hidden relative">
         
-        {/* --- Scene 1: Intro (Black Layer) --- */}
+        {/* --- Scene 1: Intro --- */}
         <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
           <div className="intro-content text-center">
-            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-6">
+            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">
               {t("skills.intro.title", "My Arsenal")}
             </h2>
-            <p className="text-xl text-white/60">
+            <p className="text-xl text-gray-600 dark:text-white/60">
               {t("skills.intro.desc", "A curated collection of technologies.")}
             </p>
           </div>
         </div>
 
-        {/* --- Scene 3: Backend (Black Layer - Bottom) --- */}
-        <div className="scene-backend absolute inset-0 bg-[#020202] flex flex-col items-center justify-center z-0">
+        {/* --- Scene 3: Backend --- */}
+        <div className="scene-backend absolute inset-0 bg-gray-50 dark:bg-[#020202] flex flex-col items-center justify-center z-0 transition-colors duration-1000">
           <div className="text-center mb-12">
-            <h3 className="text-5xl md:text-7xl font-black mb-4 text-white">
+            <h3 className="text-5xl md:text-7xl font-black mb-4 text-gray-900 dark:text-white">
               {CHAPTERS[1].title}
             </h3>
-            <p className="text-white/60 text-xl">{CHAPTERS[1].description}</p>
+            <p className="text-gray-600 dark:text-white/60 text-xl">{CHAPTERS[1].description}</p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 max-w-6xl px-4">
             {CHAPTERS[1].cards.map((card, i) => {
               const Icon = card.icon;
               return (
-                <div key={i} className="card-backend flex items-center gap-4 bg-white/5 border border-white/10 px-6 py-4 rounded-xl backdrop-blur-md w-80">
-                  <Icon className="text-3xl text-white/80" />
+                <div key={i} className="card-backend flex items-center gap-4 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-6 py-4 rounded-xl backdrop-blur-md w-80">
+                  <Icon className="text-3xl text-gray-700 dark:text-white/80" />
                   <div>
-                    <h4 className="font-bold text-lg">{card.title}</h4>
-                    <p className="text-xs text-white/40">{card.desc}</p>
+                    <h4 className="font-bold text-lg text-gray-900 dark:text-white">{card.title}</h4>
+                    <p className="text-xs text-gray-500 dark:text-white/40">{card.desc}</p>
                   </div>
                 </div>
               );
@@ -214,24 +201,24 @@ const Skills = () => {
           </div>
         </div>
 
-        {/* --- Scene 2: Frontend (White Layer - Middle) --- */}
-        <div className="scene-frontend absolute inset-0 bg-white text-black flex flex-col items-center justify-center z-20" style={{ clipPath: "circle(0% at 50% 50%)" }}>
+        {/* --- Scene 2: Frontend --- */}
+        <div className="scene-frontend absolute inset-0 bg-white dark:bg-gray-800 text-gray-900 dark:text-white flex flex-col items-center justify-center z-20 transition-colors duration-1000" style={{ clipPath: "circle(0% at 50% 50%)" }}>
           <div className="text-center mb-12 overflow-hidden">
-            <h3 className="title-frontend text-5xl md:text-7xl font-black mb-4 text-black">
+            <h3 className="title-frontend text-5xl md:text-7xl font-black mb-4 text-gray-900 dark:text-white">
               {CHAPTERS[0].title}
             </h3>
-            <p className="title-frontend text-black/60 text-xl">{CHAPTERS[0].description}</p>
+            <p className="title-frontend text-gray-600 dark:text-gray-400 text-xl">{CHAPTERS[0].description}</p>
           </div>
           
           <div className="flex flex-wrap justify-center gap-6 max-w-6xl px-4">
             {CHAPTERS[0].cards.map((card, i) => {
               const Icon = card.icon;
               return (
-                <div key={i} className="card-frontend flex items-center gap-4 bg-black/5 border border-black/10 px-6 py-4 rounded-xl w-80">
-                  <Icon className="text-3xl text-black/80" />
+                <div key={i} className="card-frontend flex items-center gap-4 bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 px-6 py-4 rounded-xl w-80">
+                  <Icon className="text-3xl text-gray-700 dark:text-gray-300" />
                   <div>
-                    <h4 className="font-bold text-lg">{card.title}</h4>
-                    <p className="text-xs text-black/40">{card.desc}</p>
+                    <h4 className="font-bold text-lg text-gray-900 dark:text-white">{card.title}</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{card.desc}</p>
                   </div>
                 </div>
               );
@@ -239,23 +226,23 @@ const Skills = () => {
           </div>
         </div>
 
-        {/* --- Scene 4: Tools (White Layer - Top) --- */}
-        <div className="scene-tools absolute inset-0 bg-white text-black flex flex-col items-center justify-center z-30" style={{ transform: "translateX(100%)" }}>
+        {/* --- Scene 4: Tools --- */}
+        <div className="scene-tools absolute inset-0 bg-white dark:bg-gray-800 text-gray-900 dark:text-white flex flex-col items-center justify-center z-30 transition-colors duration-1000" style={{ transform: "translateX(100%)" }}>
           <div className="text-center mb-12">
-            <h3 className="text-5xl md:text-7xl font-black mb-4 text-black">
+            <h3 className="text-5xl md:text-7xl font-black mb-4 text-gray-900 dark:text-white">
               {CHAPTERS[2].title}
             </h3>
-            <p className="text-black/60 text-xl">{CHAPTERS[2].description}</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xl">{CHAPTERS[2].description}</p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 max-w-6xl px-4">
             {CHAPTERS[2].cards.map((card, i) => {
               const Icon = card.icon;
               return (
-                <div key={i} className="card-tools flex items-center gap-4 bg-black/5 border border-black/10 px-6 py-4 rounded-xl w-80">
-                  <Icon className="text-3xl text-black/80" />
+                <div key={i} className="card-tools flex items-center gap-4 bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 px-6 py-4 rounded-xl w-80">
+                  <Icon className="text-3xl text-gray-700 dark:text-gray-300" />
                   <div>
-                    <h4 className="font-bold text-lg">{card.title}</h4>
-                    <p className="text-xs text-black/40">{card.desc}</p>
+                    <h4 className="font-bold text-lg text-gray-900 dark:text-white">{card.title}</h4>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{card.desc}</p>
                   </div>
                 </div>
               );
@@ -263,12 +250,12 @@ const Skills = () => {
           </div>
         </div>
 
-        {/* --- Scene 5: Outro (Black Layer - Topmost) --- */}
-        <div className="scene-outro absolute inset-0 bg-[#020202] flex flex-col items-center justify-center z-40" style={{ transform: "translateX(100%)" }}>
+        {/* --- Scene 5: Outro --- */}
+        <div className="scene-outro absolute inset-0 bg-gray-50 dark:bg-[#020202] flex flex-col items-center justify-center z-40 transition-colors duration-1000" style={{ transform: "translateX(100%)" }}>
           <h2 className="outro-text text-6xl md:text-9xl font-black uppercase tracking-tighter mb-8 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
             {t("skills.outro.title", "Level Up")}
           </h2>
-          <p className="outro-text text-xl md:text-3xl text-white/60 max-w-2xl font-light text-center">
+          <p className="outro-text text-xl md:text-3xl text-gray-600 dark:text-white/60 max-w-2xl font-light text-center">
             {t("skills.outro.desc", "Ready to build something impossible?")}
           </p>
         </div>

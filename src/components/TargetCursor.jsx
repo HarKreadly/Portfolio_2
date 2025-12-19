@@ -13,7 +13,10 @@ const TargetCursor = ({
   const spinTl = useRef(null);
   const dotRef = useRef(null);
 
+  const blobRef = useRef(null);
+
   const isActiveRef = useRef(false);
+  const isBlobActiveRef = useRef(false);
   const targetCornerPositionsRef = useRef(null);
   const tickerFnRef = useRef(null);
   const activeStrengthRef = useRef(0);
@@ -167,6 +170,9 @@ const TargetCursor = ({
       }
 
       activeTarget = target;
+      const isBlob = target.classList.contains('cursor-blob');
+      isBlobActiveRef.current = isBlob;
+
       const corners = Array.from(cornersRef.current);
       corners.forEach(corner => gsap.killTweensOf(corner));
       gsap.killTweensOf(cursorRef.current, 'rotation');
@@ -178,36 +184,86 @@ const TargetCursor = ({
       const cursorX = gsap.getProperty(cursorRef.current, 'x');
       const cursorY = gsap.getProperty(cursorRef.current, 'y');
 
-      targetCornerPositionsRef.current = [
-        { x: rect.left - borderWidth, y: rect.top - borderWidth },
-        { x: rect.right + borderWidth - cornerSize, y: rect.top - borderWidth },
-        { x: rect.right + borderWidth - cornerSize, y: rect.bottom + borderWidth - cornerSize },
-        { x: rect.left - borderWidth, y: rect.bottom + borderWidth - cornerSize }
-      ];
-
-      isActiveRef.current = true;
-      gsap.ticker.add(tickerFnRef.current);
-
-      gsap.to(
-        activeStrengthRef,
-        { current: 1, duration: hoverDuration, ease: 'power2.out' }
-      );
-
-      corners.forEach((corner, i) => {
-        gsap.to(corner, {
-          x: targetCornerPositionsRef.current[i].x - cursorX,
-          y: targetCornerPositionsRef.current[i].y - cursorY,
-          duration: 0.2,
-          ease: 'power2.out'
+      if (isBlob) {
+        // Blob effect: hide corners/dot, show blob
+        gsap.to(corners, { opacity: 0, duration: 0.2 });
+        gsap.to(dotRef.current, { opacity: 0, duration: 0.2 });
+        gsap.to(blobRef.current, { 
+          scale: 1, 
+          width: rect.width, 
+          height: rect.height, 
+          borderRadius: window.getComputedStyle(target).borderRadius,
+          opacity: 1,
+          duration: 0.4,
+          ease: "elastic.out(1, 0.75)"
         });
-      });
+        
+        // Center blob on target relative to cursor
+        gsap.to(blobRef.current, {
+          x: (rect.left + rect.width / 2) - cursorX,
+          y: (rect.top + rect.height / 2) - cursorY,
+          duration: 0.1,
+          overwrite: 'auto'
+        });
+        
+        // Update blob position on tick
+        const blobTicker = () => {
+            const cX = gsap.getProperty(cursorRef.current, 'x');
+            const cY = gsap.getProperty(cursorRef.current, 'y');
+            const r = target.getBoundingClientRect();
+             gsap.to(blobRef.current, {
+                x: (r.left + r.width / 2) - cX,
+                y: (r.top + r.height / 2) - cY,
+                duration: 0.1,
+                overwrite: 'auto'
+            });
+        };
+        gsap.ticker.add(blobTicker);
+        tickerFnRef.current = blobTicker; // Reuse ref for cleanup
+
+      } else {
+        // Standard bracket effect
+        targetCornerPositionsRef.current = [
+            { x: rect.left - borderWidth, y: rect.top - borderWidth },
+            { x: rect.right + borderWidth - cornerSize, y: rect.top - borderWidth },
+            { x: rect.right + borderWidth - cornerSize, y: rect.bottom + borderWidth - cornerSize },
+            { x: rect.left - borderWidth, y: rect.bottom + borderWidth - cornerSize }
+        ];
+
+        isActiveRef.current = true;
+        gsap.ticker.add(tickerFnRef.current);
+
+        gsap.to(
+            activeStrengthRef,
+            { current: 1, duration: hoverDuration, ease: 'power2.out' }
+        );
+
+        corners.forEach((corner, i) => {
+            gsap.to(corner, {
+            x: targetCornerPositionsRef.current[i].x - cursorX,
+            y: targetCornerPositionsRef.current[i].y - cursorY,
+            duration: 0.2,
+            ease: 'power2.out'
+            });
+        });
+      }
 
       const leaveHandler = () => {
         gsap.ticker.remove(tickerFnRef.current);
         isActiveRef.current = false;
+        isBlobActiveRef.current = false;
         targetCornerPositionsRef.current = null;
         gsap.set(activeStrengthRef, { current: 0, overwrite: true });
         activeTarget = null;
+
+        // Reset blob
+        if (blobRef.current) {
+            gsap.to(blobRef.current, { scale: 0, opacity: 0, duration: 0.3 });
+        }
+        // Show corners/dot
+        gsap.to(dotRef.current, { opacity: 1, duration: 0.2 });
+        gsap.to(corners, { opacity: 1, duration: 0.2 });
+
         if (cornersRef.current) {
           const corners = Array.from(cornersRef.current);
           gsap.killTweensOf(corners);
@@ -303,6 +359,14 @@ const TargetCursor = ({
         ref={dotRef}
         className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"
         style={{ willChange: 'transform' }} />
+      
+      {/* Blob Element */}
+      <div
+        ref={blobRef}
+        className="absolute top-1/2 left-1/2 bg-white mix-blend-difference -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none"
+        style={{ width: 0, height: 0, willChange: 'transform, width, height' }}
+      />
+
       <div
         className="target-cursor-corner absolute top-1/2 left-1/2 w-3 h-3 border-[3px] border-white -translate-x-[150%] -translate-y-[150%] border-r-0 border-b-0"
         style={{ willChange: 'transform' }} />

@@ -302,7 +302,8 @@ const SecondHeroSection = () => {
                         border border-gray-900 dark:border-white
                         overflow-hidden
                         transition-colors duration-300
-                        hover:text-white dark:hover:text-gray-900"
+                        hover:text-white dark:hover:text-gray-900
+                        cursor-blob"
             >
               {/* Fill effect on hover */}
               <span className="absolute inset-0 bg-gray-900 dark:bg-white

@@ -1,209 +1,115 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
   const sectionRef = useRef(null);
-  const yearRef = useRef(null);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const categoryRef = useRef(null);
-  const progressBarsRef = useRef([]);
-  const bottomGridRef = useRef(null);
-  const scrollTriggerRef = useRef(null);
-  
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [displayYear, setDisplayYear] = useState(1995);
-  const prevIndexRef = useRef(0);
+  const lineRef = useRef(null);
 
   const personalStory = [
     {
       title: "The Beginning",
-      description: "Born with an insatiable curiosity and a passion for creating things that matter. From early days tinkering with computers to building digital experiences, the journey has been driven by a simple belief: technology should serve people, not the other way around.",
-      year: 1995,
-      yearDisplay: "1995",
+      description:
+        "Born with an insatiable curiosity. The early 2000s marked the start of a journey fueled by imagination and a desire to understand how things work.",
+      year: "2000",
       category: "Origins",
-      items: [
-        { label: "Birthplace", value: "Digital Native" },
-        { label: "First love", value: "Computers" },
-        { label: "Dream", value: "Build & Create" },
-        { label: "Drive", value: "Curiosity" },
-      ]
+      items: ["Discovery", "Imagination", "Explore"],
     },
     {
-      title: "Finding Purpose",
-      description: "Education opened doors to endless possibilities. Studying design, code, and human behavior revealed that the best solutions come from understanding people first. Every challenge became an opportunity to learn, grow, and make an impact.",
-      year: 2015,
-      yearDisplay: "2015",
-      category: "Education",
-      items: [
-        { label: "Learning", value: "Never Stops" },
-        { label: "Focus", value: "User Experience" },
-        { label: "Approach", value: "Human-Centered" },
-        { label: "Philosophy", value: "Empathy First" },
-      ]
+      title: "The Tech Gate",
+      description:
+        "A pivotal moment of discovery. Writing the first lines of code and realizing the power of creating software. The gate to the digital world opened wide.",
+      year: "2013",
+      category: "Tech Gate",
+      items: ["Programming", "Hello World", "Passion"],
     },
     {
-      title: "Living the Craft",
-      description: "Today, every project is a canvas. Working with passionate teams, solving real problems, and creating digital experiences that people love. The mission is clear: build meaningful solutions that inspire, delight, and empower.",
-      year: 2025,
-      yearDisplay: "Now",
+      title: "Academic Milestone",
+      description:
+        "Culmination of secondary education. The Baccalaureate marked the transition from general studies to focused technical expertise.",
+      year: "2019",
+      category: "Baccalaureate",
+      items: ["Graduation", "Science", "University"],
+    },
+    {
+      title: "Engineering Journey",
+      description:
+        "Intensive years of higher education. Earning the Bachelor's degree (EN) represented mastery of fundamental engineering principles and computer science concepts.",
+      year: "2022",
+      category: "Bachelor EN",
+      items: ["Engineering", "Core CS", "Achieved"],
+    },
+    {
+      title: "Web Development",
+      description:
+        "Specializing in the modern web. Mastering the ecosystem of tools and frameworks to build responsive, dynamic, and beautiful applications.",
+      year: "2025",
+      category: "Web Dev",
+      items: ["Full Stack", "React & Node", "Creator"],
+    },
+    {
+      title: "The Present",
+      description:
+        "Living the craft every day. Building meaningful solutions, collaborating with great minds, and constantly pushing the boundaries of what's possible on the web.",
+      year: "Now",
       category: "Present",
-      items: [
-        { label: "Passion", value: "Building Dreams" },
-        { label: "Values", value: "Quality & Care" },
-        { label: "Mission", value: "Impact Lives" },
-        { label: "Vision", value: "Better Future" },
-      ]
+      items: ["Building", "Future", "Impact"],
     },
   ];
 
-  const currentStory = personalStory[activeIndex];
-
-  const handleNavigation = (direction) => {
-    const st = scrollTriggerRef.current;
-    if (!st) return;
-
-    const totalScroll = st.end - st.start;
-    const sectionSize = totalScroll / personalStory.length;
-    
-    let targetIndex;
-    if (direction === 'next') {
-      targetIndex = Math.min(activeIndex + 1, personalStory.length - 1);
-    } else {
-      targetIndex = Math.max(activeIndex - 1, 0);
-    }
-
-    // Calculate target scroll position (start of the section + a small buffer)
-    const targetScroll = st.start + (targetIndex * sectionSize) + 50;
-    
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
-  };
-
-  // Animate counter when activeIndex changes
-  useEffect(() => {
-    if (prevIndexRef.current !== activeIndex) {
-      const fromYear = personalStory[prevIndexRef.current].year;
-      const toYear = personalStory[activeIndex].year;
-      
-      // Animate the counter
-      gsap.to({ value: fromYear }, {
-        value: toYear,
-        duration: 1.5,
-        ease: "power2.out",
-        onUpdate: function() {
-          setDisplayYear(Math.round(this.targets()[0].value));
-        }
-      });
-      
-      // Animate text elements when content changes
-      const tl = gsap.timeline();
-      
-      // Fade out and slide up
-      tl.to([titleRef.current, descriptionRef.current, categoryRef.current], {
-        opacity: 0,
-        y: -20,
-        duration: 0.3,
-        stagger: 0.05,
-      })
-      // Fade in and slide down with new content
-      .to([titleRef.current, descriptionRef.current, categoryRef.current], {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        stagger: 0.08,
-        ease: "power2.out",
-      });
-
-      // Animate year with scale effect
-      gsap.fromTo(yearRef.current,
-        { scale: 0.95, opacity: 0.7 },
-        { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.2)" }
-      );
-
-      // Animate bottom grid items
-      if (bottomGridRef.current) {
-        const gridItems = bottomGridRef.current.querySelectorAll('.grid-item');
-        gsap.fromTo(gridItems,
-          { opacity: 0, y: 20 },
-          { 
-            opacity: 1, 
-            y: 0, 
-            duration: 0.5, 
-            stagger: 0.1,
-            ease: "power2.out",
-            delay: 0.3
-          }
-        );
-      }
-      
-      prevIndexRef.current = activeIndex;
-    }
-  }, [activeIndex]);
-
   useEffect(() => {
     const section = sectionRef.current;
+    const line = lineRef.current;
+    const items = section.querySelectorAll(".timeline-item");
 
-    if (section) {
-      // Fade in section
+    if (section && line) {
+      // Animate the central line
       gsap.fromTo(
-        section,
-        { opacity: 0, y: 50 },
+        line,
+        { scaleY: 0 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 1,
+          scaleY: 1,
+          ease: "none",
           scrollTrigger: {
             trigger: section,
+            start: "top 60%",
+            end: "bottom 80%",
+            scrub: 1,
+          },
+        }
+      );
+
+      // Animate each timeline item
+      items.forEach((item, index) => {
+        const content = item.querySelector(".timeline-content");
+        const dot = item.querySelector(".timeline-dot");
+        const year = item.querySelector(".timeline-year");
+
+        const isEven = index % 2 === 0;
+        const xOffset = isEven ? -50 : 50;
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
             start: "top 80%",
             end: "bottom 20%",
             toggleActions: "play none none reverse",
           },
-        }
-      );
+        });
 
-      // Initial animation for text elements
-      gsap.fromTo(
-        [titleRef.current, descriptionRef.current],
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 60%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      // Scroll-triggered carousel progression
-      const st = ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          
-          // Calculate which story we're on
-          const newIndex = Math.min(
-            Math.floor(progress * personalStory.length),
-            personalStory.length - 1
-          );
-          setActiveIndex(newIndex);
-        },
+        tl.fromTo(
+          [content, year],
+          { opacity: 0, x: xOffset },
+          { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }
+        ).fromTo(
+          dot,
+          { scale: 0, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" },
+          "-=0.6"
+        );
       });
-      scrollTriggerRef.current = st;
     }
 
     return () => {
@@ -215,129 +121,88 @@ const About = () => {
     <section
       id="about"
       ref={sectionRef}
-      className="min-h-[300vh] relative z-20 font-serif"
+      className="relative min-h-screen w-full bg-gray-50 dark:bg-gray-900 py-24 lg:py-32 overflow-hidden"
     >
-      <div className="sticky top-0 h-screen flex flex-col">
-        <div className="w-full flex-1 bg-gray-50 dark:bg-gray-900 rounded-t-[3rem] pt-12 pb-12 lg:pt-20 lg:pb-24 transition-colors duration-1000 flex flex-col justify-center">
-          <div className="w-full h-full flex flex-col justify-center px-4 md:px-8 lg:px-24">
-            <div className="w-full">
-              
-              {/* Main Content Grid */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center mb-8 lg:mb-16">
-                
-                {/* Left Column - Text Content */}
-                <div className="space-y-6 lg:space-y-10">
-                  <div className="space-y-4 lg:space-y-6">
-                    <h1 
-                      ref={titleRef}
-                      className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 dark:text-white leading-[1.1] tracking-tight"
-                    >
-                      {currentStory.title}
-                    </h1>
-                    
-                    <div className="w-12 lg:w-16 h-1 bg-gray-400 dark:bg-gray-700"></div>
-                    
-                    <p 
-                      ref={descriptionRef}
-                      className="text-sm md:text-base lg:text-lg text-gray-600 dark:text-gray-400 leading-relaxed lg:leading-loose max-w-xl font-light"
-                    >
-                      {currentStory.description}
-                    </p>
-                  </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-8 relative">
+        {/* Section Header */}
+        <div className="text-center mb-20 lg:mb-32">
+          <h2 className="text-sm font-bold tracking-[0.3em] text-gray-500 uppercase mb-4">
+            My Journey
+          </h2>
+          <h3 className="text-5xl md:text-7xl font-serif font-bold text-gray-900 dark:text-white">
+            About Me
+          </h3>
+        </div>
 
-                  {/* Scroll indicator */}
-                  <div className="pt-2 lg:pt-4">
-                    <p className="text-[10px] lg:text-xs font-sans font-bold tracking-widest text-gray-900 dark:text-white uppercase mb-2 lg:mb-4">
-                      Progress
+        {/* Timeline Container */}
+        <div className="relative">
+          {/* Central Line */}
+          <div
+            ref={lineRef}
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gray-300 dark:bg-gray-700 origin-top transform md:-translate-x-1/2"
+          ></div>
+
+          {/* Timeline Items */}
+          <div className="space-y-16 md:space-y-32">
+            {personalStory.map((story, index) => (
+              <div
+                key={index}
+                className={`timeline-item flex flex-col md:flex-row items-start md:items-center justify-between w-full ${
+                  index % 2 === 0 ? "md:flex-row-reverse" : ""
+                }`}
+              >
+                {/* Content Side */}
+                <div className="w-full md:w-[45%] pl-12 md:pl-0 timeline-content">
+                  <div
+                    className={`flex flex-col ${
+                      index % 2 === 0 ? "md:items-start" : "md:items-end"
+                    }`}
+                  >
+                    <span className="text-xs font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase mb-2">
+                      {story.category}
+                    </span>
+                    <h4
+                      className={`text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 ${
+                        index % 2 === 0 ? "md:text-left" : "md:text-right"
+                      }`}
+                    >
+                      {story.title}
+                    </h4>
+                    <p
+                      className={`text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-md ${
+                        index % 2 === 0 ? "md:text-left" : "md:text-right"
+                      }`}
+                    >
+                      {story.description}
                     </p>
-                    <div className="flex gap-2 mb-6">
-                      {personalStory.map((_, idx) => (
-                        <div
-                          key={idx}
-                          ref={(el) => (progressBarsRef.current[idx] = el)}
-                          className={`h-1 rounded-full transition-all duration-300 ${
-                            idx === activeIndex
-                              ? 'w-8 lg:w-12 bg-gray-900 dark:bg-white'
-                              : 'w-4 lg:w-6 bg-gray-400 dark:bg-gray-700'
-                          }`}
-                        />
+                    <div className="flex flex-wrap gap-2">
+                      {story.items.map((tag, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-full font-medium"
+                        >
+                          {tag}
+                        </span>
                       ))}
                     </div>
-
-                    {/* Navigation Buttons */}
-                    <div className="flex items-center bg-white dark:bg-gray-800 rounded-full border-gray-200 dark:border-gray-700 w-fit">
-                      <button 
-                        onClick={() => handleNavigation('prev')}
-                        disabled={activeIndex === 0}
-                        className={`p-3 px-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-300 rounded-l-full ${
-                          activeIndex === 0 
-                            ? 'opacity-30 cursor-not-allowed' 
-                            : 'active:bg-gray-100 dark:active:bg-gray-700'
-                        }`}
-                        aria-label="Previous story"
-                      >
-                        <ChevronLeft className="w-5 h-5 text-gray-900 dark:text-white" />
-                      </button>
-                      <div className="w-[1px] h-5 bg-gray-200 dark:bg-gray-700"></div>
-                      <button 
-                        onClick={() => handleNavigation('next')}
-                        disabled={activeIndex === personalStory.length - 1}
-                        className={`p-3 px-5 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-300 rounded-r-full ${
-                          activeIndex === personalStory.length - 1 
-                            ? 'opacity-30 cursor-not-allowed' 
-                            : 'active:bg-gray-100 dark:active:bg-gray-700'
-                        }`}
-                        aria-label="Next story"
-                      >
-                        <ChevronRight className="w-5 h-5 text-gray-900 dark:text-white" />
-                      </button>
-                    </div>
                   </div>
                 </div>
 
-                {/* Right Column - Large Year Display */}
-                <div className="flex flex-col items-center lg:items-end justify-center order-first lg:order-last mb-8 lg:mb-0">
-                  <div className="text-center lg:text-right">
-                    <div 
-                      ref={categoryRef}
-                      className="text-[10px] lg:text-xs font-sans font-bold tracking-[0.3em] text-gray-500 dark:text-gray-500 uppercase mb-4 lg:mb-8"
-                    >
-                      {currentStory.category}
-                    </div>
-                    <div 
-                      ref={yearRef}
-                      className="text-[6rem] md:text-[10rem] lg:text-[18rem] font-bold leading-none text-gray-900 dark:text-white tracking-tighter tabular-nums font-serif"
-                    >
-                      {activeIndex === 2 ? "Now" : displayYear}
-                    </div>
+                {/* Center Dot */}
+                <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-black dark:bg-white border-4 border-gray-100 dark:border-gray-900 transform -translate-x-1/2 md:-translate-x-1/2 mt-1.5 md:mt-0 z-10 timeline-dot shadow-lg"></div>
+
+                {/* Year Side */}
+                <div className="w-full md:w-[45%] pl-12 md:pl-0 mt-2 md:mt-0 timeline-year">
+                  <div
+                    className={`text-5xl md:text-8xl font-bold text-gray-200 dark:text-gray-800 font-serif ${
+                      index % 2 === 0 ? "md:text-right" : "md:text-left"
+                    }`}
+                  >
+                    {story.year}
                   </div>
                 </div>
               </div>
-
-              {/* Bottom Grid - Personal Details */}
-              <div className="pt-8 lg:pt-16 mt-6 lg:mt-12 border-t border-gray-200 dark:border-gray-800">
-                <div 
-                  ref={bottomGridRef}
-                  className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4"
-                >
-                  {currentStory.items.map((item, index) => (
-                    <div 
-                      key={index}
-                      className="grid-item group"
-                    >
-                      <div className="h-full p-3 lg:p-5 border border-gray-200 dark:border-gray-800 rounded-md hover:border-gray-900 dark:hover:border-white transition-all duration-300">
-                        <div className="text-[10px] lg:text-xs font-sans font-bold text-gray-500 dark:text-gray-500 uppercase tracking-widest mb-1 lg:mb-3">
-                          {item.label}
-                        </div>
-                        <div className="text-sm lg:text-base font-normal text-gray-900 dark:text-white leading-relaxed">
-                          {item.value}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

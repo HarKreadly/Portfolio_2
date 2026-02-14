@@ -112,17 +112,17 @@ const Contact = () => {
               Contacts
             </h4>
             <a
-              href="mailto:hey@mattered.com"
+              href="mailto:harkreadly@gmail.com"
               className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white hover:opacity-70 transition-opacity block mb-12"
             >
-              HEY@MATTERED.COM
+              HARKREADLY@GMAIL.COM
             </a>
 
             <div className="mb-12">
               <h4 className="text-gray-500 mb-6">Follow</h4>
               <div className="flex gap-6">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/harkreadly/"
                   className="text-gray-900 dark:text-white hover:opacity-70 transition-opacity"
                 >
                   <Instagram size={20} />
@@ -134,7 +134,7 @@ const Contact = () => {
                   <Twitter size={20} />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/harkreadly/"
                   className="text-gray-900 dark:text-white hover:opacity-70 transition-opacity"
                 >
                   <Linkedin size={20} />
@@ -151,7 +151,7 @@ const Contact = () => {
               it.
             </p>
             <p className="font-bold text-gray-900 dark:text-white text-sm">
-              © MATTERED 2022
+              © HAR KREADLY 2025
             </p>
           </div>
         </div>
@@ -221,7 +221,7 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="Mohammad Reza"
+                  placeholder="Har Kreadly"
                   className="w-full bg-transparent border-b border-gray-200 dark:border-gray-700 py-4 text-xl text-gray-900 dark:text-white placeholder-gray-300 focus:outline-none focus:border-black dark:focus:border-white transition-colors"
                   required
                 />

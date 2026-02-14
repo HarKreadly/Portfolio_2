@@ -1,10 +1,10 @@
 import { Github, Linkedin, Mail, Heart, Instagram, Twitter } from "lucide-react";
 import { SiArtstation } from "react-icons/si";
-import image2 from "../assets/image_2.jpg";
+import image2 from "../../assets/image_2.jpg";
 
 const Footer = () => {
   return (
-    <footer className="relative w-full overflow-hidden bg-gray-50 dark:bg-black text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-800 py-20 font-serif transition-colors duration-1000">
+    <footer className="relative w-full overflow-hidden bg-gray-50 dark:bg-black text-gray-900 dark:text-white border-t border-gray-200 dark:border-gray-800 py-20 transition-colors duration-1000">
       {/* Layer 0: Background Image - Colorful & Visible */}
       <div className="absolute inset-0 z-0">
         <img
@@ -24,7 +24,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Column 1: Brand & Bio */}
           <div className="flex flex-col gap-6">
-            <span className="text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white tracking-tight">
+            <span className="text-4xl md:text-5xl yesteryear-regular text-gray-900 dark:text-white tracking-tight">
               Har Kreadly
             </span>
             <p className="text-sm font-sans leading-relaxed text-gray-600 dark:text-gray-300 max-w-xs">

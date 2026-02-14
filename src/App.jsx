@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
-import Footer from "./components/Footer";
+import Footer from "./components/layout/Footer";
 import Home from "./pages/Home";
 import ClickSpark from "./components/ui/ClickSpark";
 import "./i18n";

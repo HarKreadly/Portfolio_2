@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Bowlby+One&family=Engagement&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Yesteryear&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -8,6 +8,24 @@
 
 .font-allura {
   font-family: "Allura", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.yesteryear-regular {
+  font-family: "Yesteryear", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.allura-regular {
+  font-family: "Allura", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.engagement-regular {
+  font-family: "Engagement", cursive;
   font-weight: 400;
   font-style: normal;
 }
@@ -127,5 +145,6 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
   }
 }

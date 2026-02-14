@@ -1,24 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Globe, X } from "lucide-react";
+import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiOutlineTranslate } from "react-icons/hi";
 import { MdOutlineTranslate } from "react-icons/md";
 
-
+const languages = [
+  { code: "en", name: "EN" },
+  { code: "es", name: "ES" },
+  { code: "fr", name: "FR" },
+];
 
 const LanguageSelector = () => {
-  const { i18n, t } = useTranslation("common");
+  const { i18n } = useTranslation("common");
   const [isOpen, setIsOpen] = useState(false);
-
-  const languages = [
-    { code: "en", name: "EN" },
-    { code: "es", name: "ES" },
-    { code: "fr", name: "FR" },
-  ];
-
-  const currentLanguage =
-    languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   const handleLanguageChange = (languageCode) => {
     i18n.changeLanguage(languageCode);
@@ -26,28 +20,43 @@ const LanguageSelector = () => {
   };
 
   // Prevent scrolling when modal is open
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
-  }
+
+    // Cleanup function to restore scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   return (
     <>
       <div
         onClick={() => setIsOpen(true)}
         className="flex gap-3 items-center cursor-pointer group"
+        role="button"
+        tabIndex={0}
+        aria-label="Open language selector"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            setIsOpen(true);
+          }
+        }}
       >
         <span className="text-gray-900 hidden dark:text-white font-sans uppercase text-xs font-bold tracking-widest group-hover:opacity-70 transition-opacity">
           Translate
         </span>
-        <div className="p-2 rounded-full bg-gray-100 dark:bg-white/10 group-hover:bg-gray-200 dark:group-hover:bg-white/20 transition-colors">
-          <MdOutlineTranslate size={20} className="text-gray-900 dark:text-white" />
+        <div className="p-2 rounded-full bg-gray-200 dark:bg-white/20 group-hover:bg-gray-300 dark:group-hover:bg-white/30 transition-colors">
+          <MdOutlineTranslate
+            size={20}
+            className="text-gray-900 dark:text-white"
+          />
         </div>
       </div>
-
 
       <AnimatePresence>
         {isOpen && (
@@ -68,6 +77,7 @@ const LanguageSelector = () => {
               <button
                 onClick={() => setIsOpen(false)}
                 className="absolute top-8 right-8 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
+                aria-label="Close language selector"
               >
                 <X size={32} />
               </button>
@@ -79,7 +89,7 @@ const LanguageSelector = () => {
                 </h3>
 
                 {/* Language Buttons */}
-                <div className="flex flex-col gap-6 min-w-[400px]">
+                <div className="flex flex-col gap-6 min-w-[300px] sm:min-w-[400px]">
                   {languages.map((language) => (
                     <motion.button
                       key={language.code}
@@ -90,14 +100,16 @@ const LanguageSelector = () => {
                       className={`group flex items-center justify-center gap-4 px-8 py-6 backdrop-blur-sm rounded-md transition-all duration-300 ${
                         i18n.language === language.code
                           ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
-                          : "bg-gray-100/50 dark:bg-white/10 hover:bg-gray-200/50 dark:hover:bg-white/20"
+                          : "bg-gray-200/80 dark:bg-white/20 hover:bg-gray-300/80 dark:hover:bg-white/30"
                       }`}
                     >
-                      <span className={`font-sans uppercase text-xs font-bold tracking-widest ${
-                        i18n.language === language.code
-                          ? "text-white dark:text-gray-900"
-                          : "text-gray-900 dark:text-white"
-                      }`}>
+                      <span
+                        className={`font-sans uppercase text-xs font-bold tracking-widest ${
+                          i18n.language === language.code
+                            ? "text-white dark:text-gray-900"
+                            : "text-gray-900 dark:text-white"
+                        }`}
+                      >
                         {language.name}
                       </span>
                     </motion.button>

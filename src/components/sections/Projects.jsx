@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { ExternalLink, Github, Filter, Search } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { projects, projectCategories } from "../data/projects";
-import ProjectCard from "./ui/ProjectCard";
+import { projects, projectCategories } from "../../data/projects";
+import ProjectCard from "../ui/ProjectCard";
 
 gsap.registerPlugin(ScrollTrigger);
 

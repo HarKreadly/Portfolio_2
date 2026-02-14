@@ -4,7 +4,7 @@ const Navbar = () => {
   const items = [
     {
       label: "About",
-      bgColor: "#0D0716",
+      bgColor: "#1e293b", // Slate 800
       textColor: "#fff",
       links: [
         { label: "My Story", href: "#about", ariaLabel: "Learn about me" },
@@ -13,7 +13,7 @@ const Navbar = () => {
     },
     {
       label: "Work",
-      bgColor: "#170D27",
+      bgColor: "#115e59", // Teal 800
       textColor: "#fff",
       links: [
         { label: "Projects", href: "#projects", ariaLabel: "View my projects" },
@@ -22,7 +22,7 @@ const Navbar = () => {
     },
     {
       label: "Contact",
-      bgColor: "#271E37",
+      bgColor: "#9f1239", // Rose 800
       textColor: "#fff",
       links: [
         { label: "Get In Touch", href: "#contact", ariaLabel: "Contact me" },

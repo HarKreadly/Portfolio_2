@@ -28,25 +28,40 @@ const ImageShowcase = ({ image, direction, onClose, onNext, onPrev }) => {
       );
     }
     
-    // Image Transition - Static Fade (No slide)
+    // Directional Premium Transition
+    const xMove = direction === "next" ? 40 : -40;
+
     tl.fromTo(
       imgRef.current,
-      { opacity: 0, scale: 0.98 },
-      { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" },
-      "-=0.5"
+      { 
+        opacity: 0, 
+        scale: 0.95, 
+        x: xMove,
+        filter: "blur(10px)"
+      },
+      { 
+        opacity: 1, 
+        scale: 1, 
+        x: 0,
+        filter: "blur(0px)",
+        duration: 0.7, 
+        ease: "power2.out" 
+      },
+      "-=0.6"
     )
     .fromTo(
       ".meta-content",
-      { y: 10, opacity: 0 },
-      { y: 0, opacity: 1, stagger: 0.05, duration: 0.4 },
-      "-=0.3"
+      { y: 15, opacity: 0, filter: "blur(5px)" },
+      { y: 0, opacity: 1, filter: "blur(0px)", stagger: 0.05, duration: 0.5 },
+      "-=0.4"
     );
 
     return () => {
       document.body.style.overflow = "";
       tl.kill();
     };
-  }, [image]); // Removed direction dependency as animation is now static
+  }, [image, direction]); 
+
 
   if (!image) return null;
 

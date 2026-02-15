@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MemoryStack from "../features/About/MemoryStack";
 import ImageShowcase from "../features/About/ImageShowcase";
+import GalleryModal from "../features/About/GalleryModal";
 import image1 from "../../assets/image_1.jpg";
 import image2 from "../../assets/image_2.jpg";
 import image3 from "../../assets/image_3.jpg";
@@ -10,80 +11,81 @@ import corrupted from "../../assets/corrupted_grace.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const personalStory = [
+  {
+    title: "The Beginning",
+    description:
+      "Born with an insatiable curiosity. The early 2000s marked the start of a journey fueled by imagination and a desire to understand how things work.",
+    year: "2000",
+    category: "Origins",
+    items: ["Discovery", "Imagination", "Explore"],
+    images: [image1, image2, image3],
+  },
+  {
+    title: "The Tech Gate",
+    description:
+      "A pivotal moment of discovery. Writing the first lines of code and realizing the power of creating software. The gate to the digital world opened wide.",
+    year: "2013",
+    category: "Tech Gate",
+    items: ["Programming", "Hello World", "Passion"],
+    images: [image3, corrupted, image1],
+  },
+  {
+    title: "Academic Milestone",
+    description:
+      "Culmination of secondary education. The Baccalaureate marked the transition from general studies to focused technical expertise.",
+    year: "2019",
+    category: "Baccalaureate",
+    items: ["Graduation", "Science", "University"],
+    images: [image2, image1, corrupted],
+  },
+  {
+    title: "Engineering Journey",
+    description:
+      "Intensive years of higher education. Earning the Bachelor's degree (EN) represented mastery of fundamental engineering principles and computer science concepts.",
+    year: "2022",
+    category: "Bachelor EN",
+    items: ["Engineering", "Core CS", "Achieved"],
+    images: [corrupted, image3, image2],
+  },
+  {
+    title: "Web Development",
+    description:
+      "Specializing in the modern web. Mastering the ecosystem of tools and frameworks to build responsive, dynamic, and beautiful applications.",
+    year: "2025",
+    category: "Web Dev",
+    items: ["Full Stack", "React & Node", "Creator"],
+    images: [image1, corrupted, image3],
+  },
+  {
+    title: "The Present",
+    description:
+      "Living the craft every day. Building meaningful solutions, collaborating with great minds, and constantly pushing the boundaries of what's possible on the web.",
+    year: "Now",
+    category: "Present",
+    items: ["Building", "Future", "Impact"],
+    images: [],
+  },
+];
+
+// Flatten images for navigation
+const allImages = personalStory.flatMap(story => 
+    story.images.map(img => ({
+        src: img,
+        title: story.title,
+        year: story.year,
+        category: story.category,
+        description: story.description
+    }))
+);
+
 const About = () => {
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
 
-  const personalStory = [
-    {
-      title: "The Beginning",
-      description:
-        "Born with an insatiable curiosity. The early 2000s marked the start of a journey fueled by imagination and a desire to understand how things work.",
-      year: "2000",
-      category: "Origins",
-      items: ["Discovery", "Imagination", "Explore"],
-      images: [image1, image2, image3],
-    },
-    {
-      title: "The Tech Gate",
-      description:
-        "A pivotal moment of discovery. Writing the first lines of code and realizing the power of creating software. The gate to the digital world opened wide.",
-      year: "2013",
-      category: "Tech Gate",
-      items: ["Programming", "Hello World", "Passion"],
-      images: [image3, corrupted, image1],
-    },
-    {
-      title: "Academic Milestone",
-      description:
-        "Culmination of secondary education. The Baccalaureate marked the transition from general studies to focused technical expertise.",
-      year: "2019",
-      category: "Baccalaureate",
-      items: ["Graduation", "Science", "University"],
-      images: [image2, image1, corrupted],
-    },
-    {
-      title: "Engineering Journey",
-      description:
-        "Intensive years of higher education. Earning the Bachelor's degree (EN) represented mastery of fundamental engineering principles and computer science concepts.",
-      year: "2022",
-      category: "Bachelor EN",
-      items: ["Engineering", "Core CS", "Achieved"],
-      images: [corrupted, image3, image2],
-    },
-    {
-      title: "Web Development",
-      description:
-        "Specializing in the modern web. Mastering the ecosystem of tools and frameworks to build responsive, dynamic, and beautiful applications.",
-      year: "2025",
-      category: "Web Dev",
-      items: ["Full Stack", "React & Node", "Creator"],
-      images: [image1, corrupted, image3],
-    },
-    {
-      title: "The Present",
-      description:
-        "Living the craft every day. Building meaningful solutions, collaborating with great minds, and constantly pushing the boundaries of what's possible on the web.",
-      year: "Now",
-      category: "Present",
-      items: ["Building", "Future", "Impact"],
-      images: [image3, image2, image1],
-    },
-  ];
-
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedGallery, setSelectedGallery] = useState(null);
   const [direction, setDirection] = useState("next");
-
-  // Flatten images for navigation
-  const allImages = personalStory.flatMap(story => 
-      story.images.map(img => ({
-          src: img,
-          title: story.title,
-          year: story.year,
-          category: story.category,
-          description: story.description
-      }))
-  );
 
   const handleImageClick = (imgSrc, storyIndex) => {
      // Find the full image object from our flattened list
@@ -103,6 +105,12 @@ const About = () => {
   };
 
   const handleClose = () => setSelectedImage(null);
+
+  const handleViewGallery = (index) => {
+    setSelectedGallery(personalStory[index]);
+  };
+
+  const handleCloseGallery = () => setSelectedGallery(null);
 
   const handleNext = () => {
     if (!selectedImage) return;
@@ -205,12 +213,28 @@ const About = () => {
 
   return (
     <>
-    <ImageShowcase 
+     <ImageShowcase 
         image={selectedImage}
         direction={direction}
         onClose={handleClose}
         onNext={handleNext}
         onPrev={handlePrev}
+    />
+    <GalleryModal 
+        gallery={selectedGallery}
+        onClose={handleCloseGallery}
+        onImageClick={(imgSrc) => {
+            // Robust find using the gallery context
+            const imgMatch = allImages.find(i => 
+                i.src === imgSrc && 
+                i.year === selectedGallery.year && 
+                i.title === selectedGallery.title
+            );
+            if (imgMatch) {
+                setDirection("next");
+                setSelectedImage(imgMatch);
+            }
+        }}
     />
     <section
       id="about"
@@ -242,29 +266,32 @@ const About = () => {
               const isLast = index === personalStory.length - 1;
               if (isLast) {
                 return (
-                 <div
+                  <div
                     key={index}
-                    className="timeline-item group flex flex-col items-center justify-center w-full relative pt-4 md:pt-8 pb-12"
+                    className={`timeline-item group flex flex-col items-center justify-center w-full relative pt-4 md:pt-8 pb-12`}
                   >
                      {/* Center Dot */}
                     <div 
                       className="absolute top-0 left-4 md:left-1/2 w-4 h-4 rounded-full bg-black dark:bg-white border-4 border-gray-100 dark:border-gray-900 -translate-x-1/2 z-20 timeline-dot shadow-lg"
                     ></div>
 
-                    <div className="w-full flex flex-col items-center text-center p-8 md:p-12 rounded-3xl transition-colors duration-500 bg-gray-900 dark:bg-gray-100 shadow-2xl relative">
-                        {/* Bookmark Ribbon */}
-                        <div 
-                            className="absolute -top-1 right-8 md:right-12 w-8 h-14 bg-gray-300 dark:bg-gray-600 z-20" 
-                            style={{ 
-                                clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%)",
-                                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.2))"
-                            }}
-                        />
-
+                    <div className="w-full flex flex-col items-center text-center p-8 md:p-12 rounded-3xl transition-colors duration-500 bg-gray-900 dark:bg-gray-100 shadow-2xl relative overflow-hidden">
+                        {/* Ribbon */}
+                        <div className="card-ribbon card-ribbon--special"></div>
+                        
                         {/* Year */}
-                        <div className="text-5xl md:text-8xl font-bold font-serif mb-6 text-white dark:text-gray-900 timeline-year relative z-10">
+                        <div className="text-5xl md:text-8xl font-bold font-serif mb-2 text-white dark:text-gray-900 timeline-year relative z-10">
                              {story.year}
                         </div>
+
+                         {/* Gallery Button */}
+                         <div className="mb-8 relative z-20">
+                             <MemoryStack 
+                                images={story.images}
+                                onImageClick={(img) => handleImageClick(img, index)}
+                                onViewGallery={() => handleViewGallery(index)}
+                             />
+                         </div>
                         
                         {/* Content centered */}
                         <div className="flex flex-col items-center w-full timeline-content relative z-10">
@@ -296,19 +323,13 @@ const About = () => {
               return (
               <div
                 key={index}
-                className={`timeline-item group flex flex-col md:flex-row items-center justify-between w-full p-0 md:p-8 rounded-3xl transition-all duration-500 bg-white/60 dark:bg-gray-800/20 relative ${
+                className={`timeline-item group flex flex-col md:flex-row items-center justify-between w-full p-0 md:p-8 rounded-3xl transition-all duration-500 bg-white/60 dark:bg-gray-800/20 relative overflow-visible ${
                   index % 2 === 0 ? "md:flex-row-reverse" : ""
                 }`}
               >
-                {/* Bookmark Ribbon */}
-                <div 
-                  className={`absolute top-0 w-6 h-10 md:w-8 md:h-14 bg-gray-300 dark:bg-gray-600 transition-colors duration-300 z-20 md:block hidden ${index % 2 === 0 ? "right-12 md:right-8" : "left-12 md:left-8"}`}
-                  style={{ 
-                      clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%)",
-                      filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.2))"
-                  }}
-                />
-
+                {/* Ribbon - Swapped side to match text side */}
+                <div className={`card-ribbon ${index % 2 === 0 ? 'card-ribbon--right' : 'card-ribbon--left'}`}></div>
+                
                 {/* Content Side */}
                 <div className="w-full md:w-[45%] pl-12 md:pl-0 timeline-content lg:w-[42%]">
                   <div
@@ -352,7 +373,7 @@ const About = () => {
                 {/* Year & Memory Side */}
                 <div className="w-full md:w-[45%] pl-12 md:pl-0 timeline-year relative lg:w-[42%]">
                   <div 
-                      className="flex flex-col items-center gap-6 w-full"
+                      className="flex flex-col items-center gap-2 w-full"
                   >
                         {/* Year Text - Order depends on side */}
                         <div
@@ -361,14 +382,14 @@ const About = () => {
                             {story.year}
                         </div>
                         
-                         {/* Integrated Memory Stack */}
-                         <div className="memory-stack-container relative w-full flex justify-center">
-                             <MemoryStack 
-                                images={story.images} 
-                                className="transform scale-90 md:scale-100 transition-transform duration-300" 
-                                onImageClick={(img) => handleImageClick(img, index)}
-                             />
-                         </div>
+                         {/* Gallery Button */}
+                          <div className="w-full flex justify-center">
+                              <MemoryStack 
+                                 images={story.images} 
+                                 onImageClick={(img) => handleImageClick(img, index)}
+                                 onViewGallery={() => handleViewGallery(index)}
+                              />
+                          </div>
                   </div>
                 </div>
               </div>

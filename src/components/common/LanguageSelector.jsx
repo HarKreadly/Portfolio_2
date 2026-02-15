@@ -50,7 +50,7 @@ const LanguageSelector = () => {
         <span className="text-gray-900 hidden dark:text-white font-sans uppercase text-xs font-bold tracking-widest group-hover:opacity-70 transition-opacity">
           Translate
         </span>
-        <div className="p-2 rounded-full bg-gray-200 dark:bg-white/20 group-hover:bg-gray-300 dark:group-hover:bg-white/30 transition-colors">
+        <div className="p-2 rounded-full bg-gray-100 dark:bg-zinc-800 group-hover:bg-gray-200 dark:group-hover:bg-zinc-700 transition-colors">
           <MdOutlineTranslate
             size={20}
             className="text-gray-900 dark:text-white"
@@ -99,14 +99,14 @@ const LanguageSelector = () => {
                       onClick={() => handleLanguageChange(language.code)}
                       className={`group flex items-center justify-center gap-4 px-8 py-6 backdrop-blur-sm rounded-md transition-all duration-300 ${
                         i18n.language === language.code
-                          ? "bg-gray-900 dark:bg-white text-white dark:text-gray-900"
-                          : "bg-gray-200/80 dark:bg-white/20 hover:bg-gray-300/80 dark:hover:bg-white/30"
+                          ? "bg-gray-900 text-white dark:bg-white dark:text-black"
+                          : "bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 text-gray-900 dark:text-white"
                       }`}
                     >
                       <span
                         className={`font-sans uppercase text-xs font-bold tracking-widest ${
                           i18n.language === language.code
-                            ? "text-white dark:text-gray-900"
+                            ? "text-white dark:text-black"
                             : "text-gray-900 dark:text-white"
                         }`}
                       >

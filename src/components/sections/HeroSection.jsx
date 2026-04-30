@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import {
   Menu,
   Sun,
@@ -26,6 +26,58 @@ const HeroSection = () => {
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const [isMenuModalOpen, setIsMenuModal] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  // Custom Cursor state and logic
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  const springConfig = { damping: 25, stiffness: 250, mass: 0.5 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  const [isHovered, setIsHovered] = useState(false);
+  const [imageBounds, setImageBounds] = useState({ width: 0, height: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if mobile to disable cursor
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
+    const handleMouseMove = (e) => {
+      const imgContainer = document.getElementById("hero-image-container");
+      if (imgContainer) {
+        const rect = imgContainer.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+        const threshold = rect.width / 2 + 20; // approach distance
+
+        if (dist < threshold) {
+           setIsHovered(true);
+           setImageBounds({ width: rect.width, height: rect.height });
+           cursorX.set(centerX);
+           cursorY.set(centerY);
+        } else {
+           setIsHovered(false);
+           cursorX.set(e.clientX);
+           cursorY.set(e.clientY);
+        }
+      } else {
+         cursorX.set(e.clientX);
+         cursorY.set(e.clientY);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [cursorX, cursorY, isMobile]);
 
   useEffect(() => {
     const timer = setInterval(() => setDateTime(new Date()), 1000);
@@ -179,6 +231,31 @@ const HeroSection = () => {
           fontSize={fontSize}
         />
       </div>
+
+      {/* Custom Cursor */}
+      {!isMobile && (
+        <motion.div
+          className={`fixed top-0 left-0 pointer-events-none mix-blend-difference ${
+            isHovered ? "z-[5]" : "z-[100]"
+          }`}
+          style={{
+            x: cursorXSpring,
+            y: cursorYSpring,
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        >
+          <motion.div
+            className="rounded-full bg-white"
+            animate={{
+              width: isHovered ? imageBounds.width + 40 : 100,
+              height: isHovered ? imageBounds.height + 40 : 100,
+              opacity: 0.1,
+            }}
+            transition={{ type: "spring", damping: 30, stiffness: 250, mass: 0.5 }}
+          />
+        </motion.div>
+      )}
 
       <CVModal
         isOpen={isCVModalOpen}

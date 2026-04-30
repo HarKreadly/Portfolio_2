@@ -13,7 +13,10 @@ const HeroCarousel = ({
   return (
     <div className="lg:col-span-6 flex opacity-80 flex-col items-center justify-center order-1 lg:order-2 relative z-10">
       {/* Image Container */}
-      <div className="relative w-[260px] h-[260px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] flex items-center justify-center">
+      <div 
+        id="hero-image-container"
+        className="relative w-[260px] h-[260px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] lg:w-[650px] lg:h-[650px] flex items-center justify-center"
+      >
         {/* Main Image */}
         <AnimatePresence mode="wait">
           <motion.div

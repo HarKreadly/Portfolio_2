@@ -148,7 +148,7 @@ const HeroSection = () => {
               Menu
             </span>
           </div>
-          <div className="h-8 w-[1px] bg-gray-200 dark:bg-white/20"></div>
+          <div className="h-8 w-px bg-gray-200 dark:bg-white/20"></div>
           <div
             className="flex gap-3 items-center cursor-pointer group"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -196,14 +196,14 @@ const HeroSection = () => {
             >
               <Github size={20} />
             </a>
-            <div className="w-[1px] h-6 bg-gray-300 dark:bg-gray-700 mx-2"></div>
+            <div className="w-px h-6 bg-gray-300 dark:bg-gray-700 mx-2"></div>
           </div>
           <LanguageSelector />
         </div>
       </nav>
 
       {/* Main Content Grid */}
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-[100dvh] pt-20 pb-10 px-4 md:px-8 lg:px-16 gap-8 items-center">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 min-h-dvh pt-20 pb-10 px-4 md:px-8 lg:px-16 gap-8 items-center">
         <HeroControls
           currentSlide={currentSlide}
           currentQuote={currentQuote}
@@ -236,7 +236,7 @@ const HeroSection = () => {
       {!isMobile && (
         <motion.div
           className={`fixed top-0 left-0 pointer-events-none mix-blend-difference ${
-            isHovered ? "z-[5]" : "z-[100]"
+            isHovered ? "z-5" : "z-100"
           }`}
           style={{
             x: cursorXSpring,

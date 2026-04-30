@@ -61,9 +61,9 @@ const About2 = () => {
           <span>HOME</span>
         </div>
         <div className="hidden md:flex items-center gap-16">
-          <span className="hover:opacity-50 cursor-pointer transition-opacity">FEATURES</span>
-          <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">ABOUT PROJECT</span>
-          <span className="hover:opacity-50 cursor-pointer transition-opacity">CONTACT US</span>
+          <span className="hover:opacity-50 cursor-pointer transition-opacity">HOME SCREEN</span>
+          <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">ABOUT ME</span>
+          <span className="hover:opacity-50 cursor-pointer transition-opacity">MY SKILLS</span>
         </div>
       </div>
 
@@ -127,7 +127,7 @@ const About2 = () => {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="absolute inset-0 flex flex-col justify-center items-center pointer-events-none"
                       >
-                        <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-black text-center tracking-[0.1em] leading-[1.2] uppercase drop-shadow-2xl">
+                        <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-black text-center tracking-widest leading-[1.2] uppercase drop-shadow-2xl">
                           {story.category.split(' ').map((word, i) => (
                             <span key={i} className="block">{word}</span>
                           ))}
@@ -177,7 +177,7 @@ const About2 = () => {
              <div className="w-[65%] pl-4 lg:pl-8 flex flex-col md:flex-row items-start justify-between border-t md:border-l border-gray-200 dark:border-gray-800 pt-4 gap-4">
                 <p className="max-w-xs lg:max-w-md line-clamp-4">{currentStory.description}</p>
                 <div className="flex items-center gap-4 font-bold uppercase tracking-[0.2em] text-black dark:text-white cursor-pointer hover:opacity-50 transition-opacity shrink-0">
-                   <span className="w-8 h-[1px] bg-black dark:bg-white block"></span>
+                   <span className="w-8 h-px bg-black dark:bg-white block"></span>
                    MORE ABOUT IT
                 </div>
              </div>
@@ -194,7 +194,7 @@ const About2 = () => {
               {personalStory.map((_, idx) => (
                 <div 
                   key={idx} 
-                  className={`transition-colors duration-500 ${idx === currentIndex ? "outline-text" : "opacity-50"}`}
+                  className={`transition-colors duration-500 ${idx === currentIndex ? "" : "opacity-50"}`}
                 >
                   {(idx + 1).toString().padStart(2, '0')}
                 </div>
@@ -213,7 +213,7 @@ const About2 = () => {
                 {/* Number & Title */}
                 <div className="flex items-start justify-between w-full mb-8 relative pr-4 lg:pr-8">
                   <div className="flex items-start gap-4 lg:gap-6">
-                    <div className="absolute top-8 -left-32 w-24 h-[1px] bg-gray-300 dark:bg-gray-700 hidden lg:block"></div>
+                    <div className="absolute top-8 -left-32 w-24 h-px bg-gray-300 dark:bg-gray-700 hidden lg:block"></div>
                     
                     <div className="text-6xl md:text-7xl font-black font-sans leading-none tracking-tighter outline-text shrink-0">
                       {(currentIndex + 1).toString().padStart(2, '0')}

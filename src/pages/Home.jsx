@@ -10,9 +10,9 @@ const Home = () => {
     <div className="min-h-screen">
       <main>
         <HeroSection />
-        <About />
+        {/* <About /> */}
         <About2 />
-        {/* <Skills /> */}
+        <Skills />
         <Projects />
         <Contact />
         {/* <Contact2 /> */}

@@ -2,6 +2,7 @@ import image1 from "../assets/image_1.jpg";
 import image2 from "../assets/image_2.jpg";
 import image3 from "../assets/image_3.jpg";
 import corrupted from "../assets/corrupted_grace.jpg";
+import developing from "../assets/Developing.png";
 
 export const personalStory = [
   {
@@ -56,6 +57,6 @@ export const personalStory = [
     year: "Now",
     category: "Present",
     items: ["Building", "Future", "Impact"],
-    images: [],
+    images: [developing],
   },
 ];

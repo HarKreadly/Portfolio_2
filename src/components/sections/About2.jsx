@@ -49,7 +49,7 @@ const About2 = () => {
           color: transparent;
         }
       `}</style>
-      <div ref={containerRef} style={{ height: `${personalStory.length * 100}vh` }} className="relative w-full bg-white dark:bg-[#0a0a0a]">
+      <div ref={containerRef} style={{ height: `${personalStory.length * 100}vh` }} className="relative w-full bg-white dark:bg-stone-950">
       <section 
         id="about2" 
         className="sticky top-0 min-h-screen w-full overflow-hidden font-sans text-gray-900 dark:text-white transition-colors duration-500 py-24 flex items-center"

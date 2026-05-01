@@ -8,6 +8,7 @@ import "./i18n";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Error404 from "./pages/Error404";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,9 +54,10 @@ function App() {
       <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/error" element={<Error404/>} />
           {/* Add more routes as needed */}
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
         <ClickSpark
           sparkColor="#fff"
           sparkSize={10}

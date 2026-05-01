@@ -129,7 +129,7 @@ const HeroSection = () => {
       </AnimatePresence>
 
       {/* Layer 1: Blur Overlay */}
-      <div className="absolute inset-0 z-0 backdrop-blur-[50px] bg-white/40 dark:bg-black/40 transition-colors duration-500"></div>
+      <div className="absolute inset-0 z-0 backdrop-blur-2xl bg-white/40 dark:bg-black/40 transition-colors duration-500"></div>
 
       {/* Layer 2: Dark Vignette */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(255,255,255,0.4)_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,1)_100%)] pointer-events-none transition-all duration-500"></div>

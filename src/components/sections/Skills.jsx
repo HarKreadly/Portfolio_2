@@ -1,189 +1,237 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Code2, Database, Wrench, TrendingUp } from "lucide-react";
-import { FaReact, FaNodeJs, FaGitAlt, FaAws, FaFigma } from "react-icons/fa";
-import { SiJavascript, SiTypescript, SiExpress, SiMongodb } from "react-icons/si";
+import { Code2, Database, Wrench, TrendingUp, Globe, Layers, Cpu, Palette } from "lucide-react";
+import { FaReact, FaNodeJs, FaGitAlt, FaAws, FaFigma, FaDocker } from "react-icons/fa";
+import { SiJavascript, SiTypescript, SiExpress, SiMongodb, SiRedux, SiPostgresql, SiWebpack, SiJest } from "react-icons/si";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import SkillShowcase from "../features/Skills/SkillShowcase";
 
-gsap.registerPlugin(ScrollTrigger);
+// Import images from assets
+import img1 from "../../assets/image_1.jpg";
+import img2 from "../../assets/image_2.jpg";
+import img3 from "../../assets/image_3.jpg";
+import img4 from "../../assets/image_4.jpg";
+import imgOther from "../../assets/corrupted_grace.jpg";
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+const SIDEBAR_CATEGORIES = ["FrontEnd", "Backend", "Tools", "Creativity", "Other"];
 
 const CHAPTERS = [
   {
     id: "frontend",
-    title: "Front-End Expertise",
-    description: "Cinematic interfaces orchestrated with React, GSAP, and resilient design systems.",
+    title: "Interface Design\n& Engineering",
+    sidebarIndex: 0,
+    image: img1,
+    description:
+      "Architecting fluid, high-performance web experiences through modern frameworks, advanced motion design, and accessible component architectures.",
     cards: [
-      { title: "React", icon: FaReact, meta: "Core", desc: "Building component-driven architectures." },
-      { title: "GSAP", icon: SiJavascript, meta: "Motion", desc: "Award-winning animations." },
-      { title: "TypeScript", icon: SiTypescript, meta: "Safety", desc: "Type-safe code." },
-      { title: "Figma", icon: FaFigma, meta: "Design", desc: "Bridging design & dev." },
-      { title: "Tailwind", icon: Code2, meta: "Style", desc: "Rapid UI development." },
-      { title: "React", icon: FaReact, meta: "Core", desc: "Building component-driven architectures." },
+      { title: "React",        icon: FaReact,      desc: "Building modular, component-driven UIs with hooks, context, and optimised re-render patterns." },
+      { title: "GSAP",         icon: SiJavascript, desc: "Award-winning motion design — scroll-triggered timelines, morphing SVGs, and physics springs." },
+      { title: "TypeScript",   icon: SiTypescript, desc: "End-to-end type safety across large codebases: generics, discriminated unions, strict null checks." },
+      { title: "Figma",        icon: FaFigma,      desc: "Prototyping pixel-perfect designs and translating design tokens directly into production code." },
+      { title: "Redux",        icon: SiRedux,      desc: "Predictable global state management with RTK slices, selectors, and middleware pipelines." },
+      { title: "Webpack",      icon: SiWebpack,    desc: "Custom bundler config: code splitting, tree shaking, module federation, and build-time optimisations." },
+      { title: "CSS / SCSS",   icon: Palette,      desc: "Advanced layouts — CSS Grid, custom properties, animations, and BEM-structured stylesheets." },
+      { title: "Accessibility",icon: Globe,        desc: "WCAG 2.1 AA compliance, semantic HTML, ARIA roles, keyboard navigation, and screen-reader support." },
     ],
   },
   {
     id: "backend",
-    title: "Back-End Mastery",
-    description: "Node runtimes, API gateways, and data layers designed to scale.",
+    title: "System Architecture\n& Data",
+    sidebarIndex: 1,
+    image: img2,
+    description:
+      "Developing scalable server environments and resilient database schemas that power complex business logic and real-time data pipelines.",
     cards: [
-      { title: "Node.js", icon: FaNodeJs, meta: "Runtime", desc: "Event-driven server-side logic." },
-      { title: "Express", icon: SiExpress, meta: "API", desc: "Minimalist web framework." },
-      { title: "MongoDB", icon: SiMongodb, meta: "Data", desc: "Flexible document storage." },
-      { title: "SQL", icon: Database, meta: "Query", desc: "Relational data modeling." },
-      { title: "Node.js", icon: FaNodeJs, meta: "Runtime", desc: "Event-driven server-side logic." },
-      { title: "Express", icon: SiExpress, meta: "API", desc: "Minimalist web framework." },
+      { title: "Node.js",    icon: FaNodeJs,     desc: "Event-driven, non-blocking server architecture — microservices, streaming, and worker threads." },
+      { title: "Express",    icon: SiExpress,    desc: "Minimal HTTP framework: middleware chains, routing, error handling, and JWT auth flows." },
+      { title: "MongoDB",    icon: SiMongodb,    desc: "Schema-flexible document storage with aggregation pipelines, indexing, and Atlas cloud hosting." },
+      { title: "PostgreSQL", icon: SiPostgresql, desc: "ACID-compliant relational queries, stored procedures, full-text search, and connection pooling." },
+      { title: "GraphQL",    icon: Layers,       desc: "Declarative data fetching with Apollo Server, dataloaders, and subscriptions over WebSockets." },
+      { title: "REST APIs",  icon: Globe,        desc: "RESTful design principles — versioning, hypermedia, rate limiting, and OpenAPI documentation." },
+      { title: "Auth",       icon: Cpu,          desc: "OAuth 2.0, JWT, session management, RBAC, and secure refresh-token rotation strategies." },
+      { title: "SQL",        icon: Database,     desc: "Complex relational modelling: joins, window functions, CTEs, and query-plan optimisation." },
     ],
   },
   {
     id: "tools",
-    title: "Tools & Workflow",
-    description: "DevOps automation, cloud delivery, and performance loops.",
+    title: "Development\nEcosystem",
+    sidebarIndex: 2,
+    image: img3,
+    description:
+      "Streamlining product delivery with robust DevOps automation, container orchestration, and cloud-native infrastructure solutions.",
     cards: [
-      { title: "Git", icon: FaGitAlt, meta: "Version", desc: "Distributed version control." },
-      { title: "AWS", icon: FaAws, meta: "Cloud", desc: "Scalable cloud infrastructure." },
-      { title: "Testing", icon: Wrench, meta: "Quality", desc: "Ensuring code reliability." },
-      { title: "Perf", icon: TrendingUp, meta: "Speed", desc: "Optimizing application performance." },
-      { title: "Git", icon: FaGitAlt, meta: "Version", desc: "Distributed version control." },
-      { title: "AWS", icon: FaAws, meta: "Cloud", desc: "Scalable cloud infrastructure." },
+      { title: "Git",         icon: FaGitAlt,   desc: "Branch strategies (Git Flow, trunk-based), interactive rebasing, bisect, and large-repo tooling." },
+      { title: "Docker",      icon: FaDocker,   desc: "Multi-stage image builds, compose orchestration, layer caching, and secure runtime configs." },
+      { title: "AWS",         icon: FaAws,      desc: "S3, Lambda, EC2, CloudFront, RDS — architecting serverless and containerised cloud solutions." },
+      { title: "CI / CD",     icon: Layers,     desc: "GitHub Actions and GitLab pipelines: lint, test, build, deploy — zero-downtime blue-green releases." },
+      { title: "Jest",        icon: SiJest,     desc: "Unit and integration testing — mocking, snapshot tests, coverage thresholds, and TDD workflows." },
+      { title: "Webpack",     icon: SiWebpack,  desc: "Bundle analysis, performance budgets, dynamic imports, and micro-frontend configurations." },
+      { title: "Performance", icon: TrendingUp, desc: "Core Web Vitals optimisation, lazy loading, virtual lists, memoisation, and profiling tools." },
+      { title: "Reliability", icon: Wrench,     desc: "Error boundaries, Sentry integration, structured logging, alerting, and chaos-engineering drills." },
+    ],
+  },
+  {
+    id: "creativity",
+    title: "Visual Identity\n& UX Design",
+    sidebarIndex: 3,
+    image: img4,
+    description: "Defining the visual language and user psychology that transforms digital products into memorable, brand-defining experiences.",
+    cards: [
+      { title: "UI Design",    icon: Palette,    desc: "Crafting intuitive interfaces with emphasis on visual hierarchy and user-centric flows." },
+      { title: "Brand Art",    icon: Cpu,        desc: "Developing cohesive visual identities: logos, palettes, and brand guidelines." },
+      { title: "Motion",       icon: TrendingUp, desc: "Animating micro-interactions and transitions to enhance spatial awareness." },
+      { title: "Typography",   icon: Globe,      desc: "Precise typesetting and font pairing to ensure readability and tone across platforms." },
+      { title: "Prototyping",  icon: Layers,     desc: "Rapidly iterating interactive mockups to validate UX concepts early in development." },
+      { title: "UX Research",  icon: Database,   desc: "Analysing user behavior and feedback to drive data-informed design decisions." },
+      { title: "Illustration", icon: Palette,    desc: "Creating custom vector assets and icons to give products a unique visual voice." },
+      { title: "Design Sys",   icon: Wrench,     desc: "Building scalable atomic design libraries for consistent multi-platform delivery." },
+    ],
+  },
+  {
+    id: "other",
+    title: "Strategic\nLeadership",
+    sidebarIndex: 4,
+    image: imgOther,
+    description: "Fostering technical excellence through cross-functional team management, agile mentorship, and continuous technological research.",
+    cards: [
+      { title: "Management",   icon: Layers,     desc: "Leading cross-functional teams to deliver complex software on strict deadlines." },
+      { title: "Agile",        icon: TrendingUp, desc: "Scrum and Kanban mastery: sprint planning, retrospectives, and backlog grooming." },
+      { title: "Mentoring",    icon: Cpu,        desc: "Guiding junior developers through code reviews and pair programming sessions." },
+      { title: "Open Source",  icon: Globe,      desc: "Contributing to community projects and maintaining public library ecosystems." },
+      { title: "Research",     icon: Database,   desc: "Staying ahead of trends by investigating emerging technologies and paradigms." },
+      { title: "Soft Skills",  icon: TrendingUp, desc: "Optimising team velocity through effective communication and conflict resolution." },
+      { title: "Documentation",icon: Wrench,     desc: "Writing clear, comprehensive technical guides for both internal and public APIs." },
+      { title: "Community",    icon: Globe,      desc: "Active participation in tech meetups, forums, and knowledge-sharing initiatives." },
     ],
   },
 ];
 
-// Flatten all skills for easy navigation
-const ALL_SKILLS = CHAPTERS.flatMap(chapter => chapter.cards);
-
 const Skills = () => {
   const { t } = useTranslation("common");
   const containerRef = useRef(null);
-  const triggerRef = useRef(null);
+  const triggerRef   = useRef(null);
+
   const [selectedSkill, setSelectedSkill] = useState(null);
+  const [activeChapter, setActiveChapter] = useState(0);
 
-  // Handlers
-  const handleOpenShowcase = (skill) => {
-    setSelectedSkill(skill);
-  };
+  const handleOpenShowcase  = (skill) => setSelectedSkill(skill);
+  const handleCloseShowcase = () => setSelectedSkill(null);
 
-  const handleCloseShowcase = () => {
-    setSelectedSkill(null);
-  };
+  const scrollToChapter = (index) => {
+    const chapterIndex = CHAPTERS.findIndex((c) => c.sidebarIndex === index);
+    if (chapterIndex === -1) return;
 
-  const handleNextSkill = () => {
-    if (!selectedSkill) return;
-    const currentIndex = ALL_SKILLS.indexOf(selectedSkill);
-    const nextIndex = (currentIndex + 1) % ALL_SKILLS.length;
-    setSelectedSkill(ALL_SKILLS[nextIndex]);
-  };
+    const totalDistance = 12000;
+    const targetProgress = chapterIndex / (CHAPTERS.length - 1);
+    const trigger = ScrollTrigger.getById("skillsTrigger");
 
-  const handlePrevSkill = () => {
-    if (!selectedSkill) return;
-    const currentIndex = ALL_SKILLS.indexOf(selectedSkill);
-    const prevIndex = (currentIndex - 1 + ALL_SKILLS.length) % ALL_SKILLS.length;
-    setSelectedSkill(ALL_SKILLS[prevIndex]);
+    if (trigger) {
+      const targetScroll = trigger.start + targetProgress * totalDistance;
+      gsap.to(window, {
+        scrollTo: targetScroll,
+        duration: 1.5,
+        ease: "power2.inOut",
+      });
+    }
   };
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
+          id: "skillsTrigger",
           trigger: triggerRef.current,
           start: "top top",
-          end: "+=8000",
-          scrub: 1,
+          end: "+=12000",
+          scrub: 0.6,
           pin: true,
+          snap: {
+            snapTo: 1 / (CHAPTERS.length - 1),
+            duration: { min: 0.1, max: 0.3 },
+            delay: 0.02,
+            ease: "power1.inOut",
+          },
+          fastScrollEnd: true,
+          preventOverlaps: true,
+          onUpdate: (self) => {
+            const idx = Math.round(self.progress * (CHAPTERS.length - 1));
+            setActiveChapter(Math.min(idx, CHAPTERS.length - 1));
+          },
         },
       });
 
-      // --- Scene 1: Intro ---
-      tl.fromTo(
-        ".intro-content",
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 1 }
-      )
-      .to(".intro-content", { opacity: 0, scale: 1.1, duration: 1 });
+      CHAPTERS.forEach((chapter, index) => {
+        const sceneSel   = `.scene-${chapter.id}`;
+        const contentSel = `${sceneSel} .scene-content`;
+        const cardsSel   = `${sceneSel} .skill-card`;
 
-      // --- Scene 2: Frontend ---
-      tl.fromTo(
-        ".scene-frontend",
-        { clipPath: "circle(0% at 50% 50%)" },
-        { clipPath: "circle(150% at 50% 50%)", duration: 1.5, ease: "power2.inOut" },
-        "-=0.5"
-      );
-
-      tl.fromTo(
-        ".title-frontend",
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
-      );
-
-      tl.fromTo(
-        ".card-frontend",
-        {
-          x: (i) => (i % 2 === 0 ? -window.innerWidth : window.innerWidth),
-          opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1.5,
-          stagger: 0.1,
-          ease: "power3.out",
+        // ── ENTER ────────────────────────────────────────────────
+        if (index === 0) {
+          // First chapter: content rises up from below on load
+          tl.fromTo(
+            contentSel,
+            { y: 80, opacity: 0 },
+            { y: 0,  opacity: 1, duration: 1.2, ease: "power3.out" }
+          );
+          // Cards stagger up into view
+          tl.fromTo(
+            cardsSel,
+            { y: 40, opacity: 0 },
+            { y: 0,  opacity: 1, duration: 0.7, stagger: 0.08, ease: "power3.out" },
+            "-=0.6"
+          );
+        } else {
+          // Scene slides in from the right
+          tl.fromTo(
+            sceneSel,
+            { x: "100%" },
+            { x: "0%", duration: 1.4, ease: "power2.inOut" }
+          );
+          // Content rises from below while scene is settling
+          tl.fromTo(
+            contentSel,
+            { y: 80, opacity: 0 },
+            { y: 0,  opacity: 1, duration: 1, ease: "power3.out" },
+            "-=0.7"
+          );
+          // Cards stagger up
+          tl.fromTo(
+            cardsSel,
+            { y: 40, opacity: 0 },
+            { y: 0,  opacity: 1, duration: 0.7, stagger: 0.08, ease: "power3.out" },
+            "-=0.5"
+          );
         }
-      );
 
-      tl.to({}, { duration: 1 });
-
-      // --- Scene 3: Transition to Backend ---
-      tl.to(".scene-frontend", {
-        x: "100%",
-        duration: 1.5,
-        ease: "power2.inOut",
+        // ── EXIT ─────────────────────────────────────────────────
+        // (skipped for the last chapter — nothing to exit into)
+        if (index !== CHAPTERS.length - 1) {
+          // Cards drift upward first
+          tl.to(cardsSel, {
+            y: -40,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.04,
+            ease: "power2.in",
+          });
+          // Content follows upward — reversed on scroll-up: falls back down
+          tl.to(
+            contentSel,
+            { y: -80, opacity: 0, duration: 0.8, ease: "power2.in" },
+            "-=0.3"
+          );
+          // Scene slides out to the left
+          tl.to(
+            sceneSel,
+            { x: "-100%", duration: 1.4, ease: "power2.inOut" },
+            "-=0.3"
+          );
+        }
       });
-
-      tl.fromTo(
-        ".scene-backend",
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 1 },
-        "-=1"
-      );
-
-      tl.fromTo(
-        ".card-backend",
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }
-      );
-
-      tl.to({}, { duration: 1 });
-
-      // --- Scene 4: Tools ---
-      tl.fromTo(
-        ".scene-tools",
-        { x: "100%" },
-        { x: "0%", duration: 1.5, ease: "power2.inOut" }
-      );
-
-      tl.fromTo(
-        ".card-tools",
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out" }
-      );
-
-      tl.to({}, { duration: 1 });
-
-      // --- Scene 5: Outro ---
-      tl.fromTo(
-        ".scene-outro",
-        { x: "100%" },
-        { x: "0%", duration: 1.5, ease: "power2.inOut" }
-      );
-
-      tl.fromTo(
-        ".outro-text",
-        { scale: 0.5, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1, ease: "elastic.out(1, 0.5)" }
-      );
-
     }, containerRef);
 
     return () => ctx.revert();
@@ -191,123 +239,136 @@ const Skills = () => {
 
   return (
     <>
-      <SkillShowcase 
-        skill={selectedSkill} 
-        onClose={handleCloseShowcase}
-        onNext={handleNextSkill}
-        onPrev={handlePrevSkill}
-      />
-      
-      <section ref={containerRef} className="relative bg-gray-50 dark:bg-[#020202] text-gray-900 dark:text-white transition-colors duration-1000">
-        <div ref={triggerRef} className="h-screen w-full overflow-hidden relative">
-          
-          {/* --- Scene 1: Intro --- */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-            <div className="intro-content text-center">
-              <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-6 text-gray-900 dark:text-white">
-                {t("skills.intro.title", "My Arsenal")}
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-white/60">
-                {t("skills.intro.desc", "A curated collection of technologies.")}
-              </p>
+      <SkillShowcase skill={selectedSkill} onClose={handleCloseShowcase} />
+
+      <section
+        ref={containerRef}
+        className="relative bg-white dark:bg-[#0a0a0a] text-black dark:text-white overflow-hidden"
+      >
+        <div ref={triggerRef} className="h-screen w-full relative">
+
+          {/* ── Top nav ── Corrected to not overlap sidebar ── */}
+          <div className="absolute top-12 left-0 w-full pr-12 md:pr-14 px-8 md:px-16 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 text-black dark:text-white">
+            <div className="flex flex-col leading-tight font-black font-serif text-lg">
+              <span>BASE</span>
+              <span>HOME</span>
+            </div>
+            <div className="hidden md:flex items-center gap-16">
+              <span className="hover:opacity-50 cursor-pointer transition-opacity">HOME SCREEN</span>
+              <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">MY SKILLS</span>
+              <span className="hover:opacity-50 cursor-pointer transition-opacity">ABOUT ME</span>
             </div>
           </div>
 
-          {/* --- Scene 3: Backend --- */}
-          <div className="scene-backend absolute inset-0 bg-gray-50 dark:bg-[#020202] flex flex-col items-center justify-center z-0 transition-colors duration-1000">
-            <div className="text-center mb-12">
-              <h3 className="text-5xl md:text-7xl font-black mb-4 text-gray-900 dark:text-white">
-                {CHAPTERS[1].title}
-              </h3>
-              <p className="text-gray-600 dark:text-white/60 text-xl">{CHAPTERS[1].description}</p>
+          {/* ── Right sidebar ── */}
+          <div className="absolute right-0 top-0 h-full w-12 md:w-14 bg-black z-40 flex flex-col items-center py-8">
+            {/* Hamburger */}
+            <div className="flex flex-col gap-[5px] mb-10">
+              <span className="w-5 h-[2px] bg-white block" />
+              <span className="w-5 h-[2px] bg-white block" />
+              <span className="w-5 h-[2px] bg-white block" />
             </div>
-            {/* Optimized Grid for Laptops: max-w-5xl, smaller cards on lg */}
-            <div className="flex flex-wrap justify-center gap-4 lg:gap-6 max-w-6xl px-4 lg:max-w-5xl">
-              {CHAPTERS[1].cards.map((card, i) => {
-                const Icon = card.icon;
+
+            <div className="flex-1 flex flex-col items-center justify-center gap-20">
+              {SIDEBAR_CATEGORIES.map((label, i) => {
+                const isActive   = i === CHAPTERS[activeChapter]?.sidebarIndex;
+                const hasChapter = CHAPTERS.some((c) => c.sidebarIndex === i);
+
                 return (
-                  <div 
-                    key={i} 
-                    onClick={() => handleOpenShowcase(card)}
-                    className="card-backend flex items-center gap-4 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-6 py-4 rounded-xl backdrop-blur-md w-full md:w-[45%] lg:w-72 cursor-pointer hover:bg-white/10 dark:hover:bg-white/10 transition-colors hover:scale-[1.02] duration-300"
+                  <span
+                    key={label}
+                    onClick={() => scrollToChapter(i)}
+                    className={`rotate-90 text-[10px] font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-all duration-500 ${
+                      hasChapter
+                        ? "cursor-pointer hover:text-white"
+                        : "opacity-20 pointer-events-none"
+                    }`}
+                    style={{
+                      color:         isActive ? "#fff" : "rgba(255,255,255,0.25)",
+                      letterSpacing: isActive ? "0.3em" : "0.2em",
+                    }}
                   >
-                    <Icon className="text-3xl text-gray-700 dark:text-white/80" />
-                    <div>
-                      <h4 className="font-bold text-lg text-gray-900 dark:text-white">{card.title}</h4>
-                      <p className="text-xs text-gray-500 dark:text-white/40">{card.desc}</p>
-                    </div>
-                  </div>
+                    {label}
+                  </span>
                 );
               })}
             </div>
           </div>
 
-          {/* --- Scene 2: Frontend --- */}
-          <div className="scene-frontend absolute inset-0 bg-white dark:bg-gray-800 text-gray-900 dark:text-white flex flex-col items-center justify-center z-20 transition-colors duration-1000" style={{ clipPath: "circle(0% at 50% 50%)" }}>
-            <div className="text-center mb-12 overflow-hidden">
-              <h3 className="title-frontend text-5xl md:text-7xl font-black mb-4 text-gray-900 dark:text-white">
-                {CHAPTERS[0].title}
-              </h3>
-              <p className="title-frontend text-gray-600 dark:text-gray-400 text-xl">{CHAPTERS[0].description}</p>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-4 lg:gap-6 max-w-6xl px-4 lg:max-w-5xl">
-              {CHAPTERS[0].cards.map((card, i) => {
-                const Icon = card.icon;
-                return (
-                  <div 
-                    key={i} 
-                    onClick={() => handleOpenShowcase(card)}
-                    className="card-frontend flex items-center gap-4 bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 px-6 py-4 rounded-xl w-full md:w-[45%] lg:w-72 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors hover:scale-[1.02] duration-300"
-                  >
-                    <Icon className="text-3xl text-gray-700 dark:text-gray-300" />
-                    <div>
-                      <h4 className="font-bold text-lg text-gray-900 dark:text-white">{card.title}</h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{card.desc}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          {/* ── Chapters ── */}
+          {CHAPTERS.map((chapter, chapterIndex) => (
+            <div
+              key={chapter.id}
+              className={`scene-${chapter.id} absolute inset-0 flex flex-col pr-12 md:pr-14 bg-white dark:bg-[#0a0a0a]`}
+              style={{ transform: chapterIndex === 0 ? "none" : "translateX(100%)" }}
+            >
+              {/* scene-content animates up/down */}
+              <div className="scene-content w-full max-w-[1400px] mx-auto flex flex-col flex-1 px-8 md:px-16 pt-32 pb-8 gap-8">
 
-          {/* --- Scene 4: Tools --- */}
-          <div className="scene-tools absolute inset-0 bg-white dark:bg-gray-800 text-gray-900 dark:text-white flex flex-col items-center justify-center z-30 transition-colors duration-1000" style={{ transform: "translateX(100%)" }}>
-            <div className="text-center mb-12">
-              <h3 className="text-5xl md:text-7xl font-black mb-4 text-gray-900 dark:text-white">
-                {CHAPTERS[2].title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 text-xl">{CHAPTERS[2].description}</p>
-            </div>
-            <div className="flex flex-wrap justify-center gap-4 lg:gap-6 max-w-6xl px-4 lg:max-w-5xl">
-              {CHAPTERS[2].cards.map((card, i) => {
-                const Icon = card.icon;
-                return (
-                  <div 
-                    key={i} 
-                    onClick={() => handleOpenShowcase(card)}
-                    className="card-tools flex items-center gap-4 bg-gray-100 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 px-6 py-4 rounded-xl w-full md:w-[45%] lg:w-72 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors hover:scale-[1.02] duration-300"
-                  >
-                    <Icon className="text-3xl text-gray-700 dark:text-gray-300" />
-                    <div>
-                      <h4 className="font-bold text-lg text-gray-900 dark:text-white">{card.title}</h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{card.desc}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                {/* ── Hero row: image LEFT + title RIGHT ── */}
+                <div className="flex flex-col lg:flex-row gap-10 items-center">
 
-          {/* --- Scene 5: Outro --- */}
-          <div className="scene-outro absolute inset-0 bg-gray-50 dark:bg-[#020202] flex flex-col items-center justify-center z-40 transition-colors duration-1000" style={{ transform: "translateX(100%)" }}>
-            <h2 className="outro-text text-6xl md:text-9xl font-black uppercase tracking-tighter mb-8 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              {t("skills.outro.title", "Level Up")}
-            </h2>
-            <p className="outro-text text-xl md:text-3xl text-gray-600 dark:text-white/60 max-w-2xl font-light text-center">
-              {t("skills.outro.desc", "Ready to build something impossible?")}
-            </p>
-          </div>
+                  <div className="w-full lg:w-[52%] h-[200px] md:h-[230px] overflow-hidden flex-shrink-0 bg-gray-200 dark:bg-gray-800 shadow-sm">
+                    <img
+                      src={chapter.image}
+                      alt={chapter.title}
+                      className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-4 lg:w-[48%]">
+                    <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+                      {chapter.title.split("\n").map((line, i) => (
+                        <span key={i} className="block">{line}</span>
+                      ))}
+                    </h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-md">
+                      {chapter.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* ── 8-card grid ── */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {chapter.cards.map((skill, skillIndex) => {
+                    const Icon = skill.icon;
+                    return (
+                      <div
+                        key={skillIndex}
+                        onClick={() => handleOpenShowcase(skill)}
+                        className="skill-card group flex flex-col bg-white dark:bg-[#111] p-4 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer min-h-[160px]"
+                      >
+                        {/* Number badge */}
+                        <div className="w-6 h-6 bg-gray-800 dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center mb-3 flex-shrink-0">
+                          {skillIndex + 1}
+                        </div>
+
+                        {/* Title */}
+                        <h4 className="text-sm font-semibold mb-1.5 text-black dark:text-white">
+                          {skill.title}
+                        </h4>
+
+                        {/* Divider */}
+                        <div className="w-5 h-[2px] bg-black dark:bg-white mb-2 group-hover:w-8 transition-all duration-500" />
+
+                        {/* Description */}
+                        <p className="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed mb-auto line-clamp-3">
+                          {skill.desc}
+                        </p>
+
+                        {/* CTA */}
+                        <div className="flex items-center justify-between mt-3 text-[9px] uppercase tracking-widest text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">
+                          <span>More Detailed</span>
+                          <span className="text-sm leading-none">›</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+              </div>
+            </div>
+          ))}
 
         </div>
       </section>

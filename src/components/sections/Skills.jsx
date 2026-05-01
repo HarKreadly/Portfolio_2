@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import SkillShowcase from "../features/Skills/SkillShowcase";
+import { HiMenuAlt1 } from "react-icons/hi";
 
 // Import images from assets
 import img1 from "../../assets/image_1.jpg";
@@ -264,9 +265,9 @@ const Skills = () => {
                 <span>HOME</span>
               </div>
               <div className="hidden md:flex items-center gap-16">
-                <span className="hover:opacity-50 cursor-pointer transition-opacity">HOME SCREEN</span>
-                <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">MY SKILLS</span>
                 <span className="hover:opacity-50 cursor-pointer transition-opacity">ABOUT ME</span>
+                <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">MY SKILLS</span>
+                <span className="hover:opacity-50 cursor-pointer transition-opacity">MY PROJECTS</span>
               </div>
             </div>
 
@@ -282,7 +283,7 @@ const Skills = () => {
                 {/* ── Hero row: image LEFT + title RIGHT ── */}
                 <div className="flex flex-col lg:flex-row gap-10 items-center">
 
-                  <div className="w-full lg:w-[52%] h-[200px] md:h-[230px] overflow-hidden flex-shrink-0 bg-gray-200 dark:bg-gray-800 shadow-sm">
+                  <div className="w-full lg:w-[52%] h-[200px] md:h-[230px] overflow-hidden shrink-0 bg-gray-200 dark:bg-gray-800 shadow-sm">
                     <img
                       src={chapter.image}
                       alt={chapter.title}
@@ -313,7 +314,7 @@ const Skills = () => {
                         className="skill-card group flex flex-col bg-white dark:bg-[#111] p-4 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer min-h-[160px]"
                       >
                         {/* Number badge */}
-                        <div className="w-6 h-6 bg-gray-800 dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center mb-3 flex-shrink-0">
+                        <div className="w-6 h-6 bg-gray-800 dark:bg-white text-white dark:text-black text-[10px] font-bold flex items-center justify-center mb-3 shrink-0">
                           {skillIndex + 1}
                         </div>
 
@@ -345,40 +346,43 @@ const Skills = () => {
           ))}
           </div>
 
-          {/* ── Right sidebar Area ── */}
-          <div className="w-12 md:w-14 bg-black flex flex-col items-center py-8 relative z-40 h-full">
-            {/* Hamburger */}
-            <div className="flex flex-col gap-[5px] mb-10">
-              <span className="w-5 h-[2px] bg-white block" />
-              <span className="w-5 h-[2px] bg-white block" />
-              <span className="w-5 h-[2px] bg-white block" />
-            </div>
+        {/* ── Right sidebar Area ── */}
+        <div className="w-12 md:w-14 bg-zinc-800 dark:bg-zinc-100 flex flex-col items-center py-8 relative z-40 h-full">
 
-            <div className="flex-1 flex flex-col items-center justify-center gap-20">
-              {SIDEBAR_CATEGORIES.map((label, i) => {
-                const isActive   = i === CHAPTERS[activeChapter]?.sidebarIndex;
-                const hasChapter = CHAPTERS.some((c) => c.sidebarIndex === i);
-
-                return (
-                  <span
-                    key={label}
-                    onClick={() => scrollToChapter(i)}
-                    className={`rotate-90 text-[10px] font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-all duration-500 ${
-                      hasChapter
-                        ? "cursor-pointer hover:text-white"
-                        : "opacity-20 pointer-events-none"
-                    }`}
-                    style={{
-                      color:         isActive ? "#fff" : "rgba(255,255,255,0.25)",
-                      letterSpacing: isActive ? "0.3em" : "0.2em",
-                    }}
-                  >
-                    {label}
-                  </span>
-                );
-              })}
-            </div>
+          {/* Icon */}
+          <div className="mb-10">
+            <HiMenuAlt1 className="text-xl text-white dark:text-black" />
           </div>
+
+          {/* Sidebar labels */}
+          <div className="flex-1 flex flex-col items-center justify-center gap-20">
+            {SIDEBAR_CATEGORIES.map((label, i) => {
+              const isActive   = i === CHAPTERS[Math.round(activeChapter)]?.sidebarIndex;
+              const hasChapter = CHAPTERS.some((c) => c.sidebarIndex === i);
+
+              return (
+                <span
+                  key={label}
+                  onClick={() => scrollToChapter(i)}
+                  className={`
+                    rotate-90 text-[10px] font-bold uppercase whitespace-nowrap
+                    transition-all duration-500 ease-[0.16,1,0.3,1]
+
+                    ${hasChapter ? "cursor-pointer" : "opacity-20 pointer-events-none"}
+
+                    ${
+                      isActive
+                        ? "text-white dark:text-black scale-110 opacity-100"
+                        : "text-zinc-400 dark:text-zinc-500 scale-95 opacity-60 hover:opacity-100 hover:text-white dark:hover:text-black"
+                    }
+                  `}
+                >
+                  {label}
+                </span>
+              );
+            })}
+          </div>
+        </div>
 
         </div>
       </section>

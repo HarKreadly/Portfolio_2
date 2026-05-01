@@ -250,7 +250,7 @@ const HeroSection = () => {
             animate={{
               width: isHovered ? imageBounds.width + 40 : 100,
               height: isHovered ? imageBounds.height + 40 : 100,
-              opacity: 0.1,
+              opacity: 0.02,
             }}
             transition={{ type: "spring", damping: 30, stiffness: 250, mass: 0.5 }}
           />

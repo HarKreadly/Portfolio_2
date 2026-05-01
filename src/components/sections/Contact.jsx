@@ -1,17 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  Instagram,
-  Twitter,
-  Linkedin,
-} from "lucide-react";
+import { Instagram, Twitter, Linkedin, ArrowUpRight, Globe, Clock } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
-  const { t } = useTranslation("common");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,259 +14,193 @@ const Contact = () => {
     budget: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const sectionRef = useRef(null);
-  const buttonRef = useRef(null);
+  const containerRef = useRef(null);
 
-  const services = [
-    "Branding",
-    "UX/UI",
-    "Animation",
-    "3D Design",
-    "Identify",
-    "Webflow",
-  ];
-
-  const budgets = ["2K - 10K", "10K - 50K", "More than 50K"];
+  const services = ["Branding", "UX/UI", "Animation", "3D Design", "Webflow"];
+  const budgets = ["2K - 10K", "10K - 50K", "50K+"];
 
   useEffect(() => {
-    const section = sectionRef.current;
-
-    if (section) {
-      // Animate elements on scroll
-      const elements = section.querySelectorAll(".animate-up");
-      gsap.fromTo(
-        elements,
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 70%",
-          },
+    const ctx = gsap.context(() => {
+      // Entrance animation for content blocks
+      gsap.from(".animate-contact", {
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
         }
-      );
-    }
+      });
+    });
+    return () => ctx.revert();
   }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleServiceToggle = (service) => {
+  const handleToggle = (field, value) => {
     setFormData((prev) => {
-      const newServices = prev.services.includes(service)
-        ? prev.services.filter((s) => s !== service)
-        : [...prev.services, service];
-      return { ...prev, services: newServices };
-    });
-  };
-
-  const handleBudgetSelect = (budget) => {
-    setFormData((prev) => ({
-      ...prev,
-      budget: prev.budget === budget ? "" : budget,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Form submitted:", formData);
-    setIsSubmitting(false);
-    setFormData({
-      name: "",
-      email: "",
-      projectDetails: "",
-      services: [],
-      budget: "",
+      if (field === "services") {
+        const services = prev.services.includes(value)
+          ? prev.services.filter((s) => s !== value)
+          : [...prev.services, value];
+        return { ...prev, services };
+      }
+      return { ...prev, [field]: prev[field] === value ? "" : value };
     });
   };
 
   return (
-    <section
-      id="contact"
-      ref={sectionRef}
-      className="min-h-screen w-full bg-white dark:bg-gray-900 py-20 lg:py-32 px-4 md:px-8 lg:px-16"
-    >
-      <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24">
-        {/* Left Column - Contact Info */}
-        <div className="lg:w-1/3 flex flex-col justify-between animate-up">
-          <div>
-            <h4 className="text-sm font-bold tracking-widest text-gray-500 uppercase mb-8">
-              Contacts
-            </h4>
-            <a
-              href="mailto:harkreadly@gmail.com"
-              className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white hover:opacity-70 transition-opacity block mb-12"
-            >
-              HARKREADLY@GMAIL.COM
-            </a>
+    <div ref={containerRef} className="relative w-full bg-white dark:bg-[#0a0a0a]">
+      <style>{`
+        .outline-text {
+          -webkit-text-stroke: 1px rgba(0,0,0,0.8);
+          color: transparent;
+        }
+        .dark .outline-text {
+          -webkit-text-stroke: 1px rgba(255,255,255,0.8);
+          color: transparent;
+        }
+      `}</style>
 
-            <div className="mb-12">
-              <h4 className="text-gray-500 mb-6">Follow</h4>
-              <div className="flex gap-6">
-                <a
-                  href="https://www.instagram.com/harkreadly/"
-                  className="text-gray-900 dark:text-white hover:opacity-70 transition-opacity"
-                >
-                  <Instagram size={20} />
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-900 dark:text-white hover:opacity-70 transition-opacity"
-                >
-                  <Twitter size={20} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/harkreadly/"
-                  className="text-gray-900 dark:text-white hover:opacity-70 transition-opacity"
-                >
-                  <Linkedin size={20} />
-                </a>
-              </div>
-            </div>
+      {/* STICKY SECTION: Ensures the positioning matches About2 and FAQ */}
+      <section className="sticky top-0 h-screen w-full overflow-hidden font-sans text-gray-900 dark:text-white transition-colors duration-500 flex items-center">
+        
+        {/* Header Navigation */}
+        <div className="absolute top-12 left-0 w-full px-8 md:px-16 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 text-black dark:text-white">
+          <div className="flex flex-col leading-tight font-black font-serif text-lg">
+            <span>BASE</span>
+            <span>HOME</span>
           </div>
-
-          <div className="space-y-6">
-            <p className="text-sm text-gray-600 dark:text-gray-400 max-w-xs leading-relaxed">
-              We strategically design beautiful brands, websites, and digital
-              products that actually work. Creating a product that connects with
-              your target group is essential for success, and we know how to do
-              it.
-            </p>
-            <p className="font-bold text-gray-900 dark:text-white text-sm">
-              © HAR KREADLY 2025
-            </p>
+          <div className="hidden md:flex items-center gap-16">
+            <span className="hover:opacity-50 cursor-pointer transition-opacity">MY PROJECTS</span>
+            <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">GET IN TOUCH</span>
+            <span className="hover:opacity-50 cursor-pointer transition-opacity">FAQ</span>
           </div>
         </div>
 
-        {/* Right Column - Form */}
-        <div className="lg:w-2/3 animate-up">
-          <div className="mb-12">
-            <h4 className="text-sm font-bold tracking-widest text-gray-500 uppercase mb-4">
-              Hire Us
-            </h4>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-[0.9] tracking-tight mb-12">
-              A PROJECT WITH
-              <br />
-              MATTERED?
-            </h2>
+        <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row px-8 md:px-16 relative z-10 items-start justify-between gap-12 lg:gap-24">
+          
+          {/* LEFT: Identity & Metadata (35%) */}
+          <div className="animate-contact w-full lg:w-[35%] flex flex-col justify-between min-h-[60vh]">
+            <div>
+              <span className="text-[10px] font-black tracking-[0.3em] text-stone-400 dark:text-stone-500 uppercase mb-6 flex items-center gap-4">
+                <span className="w-8 h-px bg-stone-300 dark:bg-stone-700"></span>
+                Inquiry Hub
+              </span>
+              
+              <h2 className="text-6xl md:text-8xl font-black font-sans leading-[0.85] tracking-tighter text-stone-900 dark:text-white mb-10">
+                WANT TO <br/> <span className="outline-text">CONNECT?</span>
+              </h2>
+
+              <div className="space-y-8 mb-12">
+                <div className="group">
+                  <span className="text-[10px] font-black tracking-widest text-stone-400 uppercase block mb-2">Primary Email</span>
+                  <a href="mailto:harkreadly@gmail.com" className="flex items-center gap-3 text-xl md:text-2xl font-bold hover:text-stone-500 transition-colors">
+                    HARKREADLY@GMAIL.COM <ArrowUpRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+
+                <div className="grid grid-cols-2 gap-8 pt-4 border-t border-stone-200 dark:border-stone-800">
+                  <div>
+                    <span className="text-[10px] font-black tracking-widest text-stone-400 uppercase block mb-2 flex items-center gap-2">
+                      <Globe size={10} /> Location
+                    </span>
+                    <p className="text-sm font-bold tracking-tight">Remote / EU</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black tracking-widest text-stone-400 uppercase block mb-2 flex items-center gap-2">
+                      <Clock size={10} /> Local Time
+                    </span>
+                    <p className="text-sm font-bold tracking-tight">11:28 AM</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-auto">
+              <p className="text-stone-400 dark:text-stone-500 text-[11px] leading-loose max-w-xs mb-4">
+                Strategically designing brands and websites that bridge the gap between educational instruction and high-end digital experiences.
+              </p>
+              <p className="font-black text-stone-900 dark:text-stone-200 text-[10px] tracking-[0.2em] uppercase">
+                © HAR KREADLY — 2026
+              </p>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-12">
-            {/* Services */}
-            <div className="space-y-4">
-              <label className="block text-gray-500 text-lg">Services</label>
-              <div className="flex flex-wrap gap-3">
-                {services.map((service) => (
-                  <button
-                    key={service}
-                    type="button"
-                    onClick={() => handleServiceToggle(service)}
-                    className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                      formData.services.includes(service)
-                        ? "bg-black text-white dark:bg-white dark:text-black"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                    }`}
-                  >
-                    {service}
-                  </button>
-                ))}
+          {/* RIGHT: The Form with Budget (60%) */}
+          <div className="animate-contact w-full lg:w-[60%] bg-stone-50 dark:bg-[#111] p-8 md:p-14 rounded-[3rem] border border-stone-200/50 dark:border-stone-800/50">
+            <form className="space-y-10">
+              
+              {/* Service Selection */}
+              <div className="space-y-4">
+                <span className="text-[10px] font-black tracking-widest text-stone-400 uppercase">I'm looking for...</span>
+                <div className="flex flex-wrap gap-2">
+                  {services.map((s) => (
+                    <button key={s} type="button" onClick={() => handleToggle("services", s)}
+                      className={`px-5 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-500 border ${
+                        formData.services.includes(s)
+                          ? "bg-black text-white border-black dark:bg-white dark:text-black"
+                          : "bg-transparent text-stone-400 border-stone-200 dark:border-stone-800 hover:border-stone-400"
+                      }`}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Budget */}
-            <div className="space-y-4">
-              <label className="block text-gray-500 text-lg">Your Budget</label>
-              <div className="flex flex-wrap gap-3">
-                {budgets.map((budget) => (
-                  <button
-                    key={budget}
-                    type="button"
-                    onClick={() => handleBudgetSelect(budget)}
-                    className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                      formData.budget === budget
-                        ? "bg-black text-white dark:bg-white dark:text-black"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                    }`}
-                  >
-                    {budget}
-                  </button>
-                ))}
+              {/* BUDGET SELECTION (Restored) */}
+              <div className="space-y-4">
+                <span className="text-[10px] font-black tracking-widest text-stone-400 uppercase">Your Budget</span>
+                <div className="flex flex-wrap gap-2">
+                  {budgets.map((b) => (
+                    <button key={b} type="button" onClick={() => handleToggle("budget", b)}
+                      className={`px-5 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-500 border ${
+                        formData.budget === b
+                          ? "bg-black text-white border-black dark:bg-white dark:text-black"
+                          : "bg-transparent text-stone-400 border-stone-200 dark:border-stone-800 hover:border-stone-400"
+                      }`}
+                    >
+                      {b}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Inputs */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="space-y-2">
-                <label className="block text-gray-500 text-lg">Your Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Har Kreadly"
-                  className="w-full bg-transparent border-b border-gray-200 dark:border-gray-700 py-4 text-xl text-gray-900 dark:text-white placeholder-gray-300 focus:outline-none focus:border-black dark:focus:border-white transition-colors"
-                  required
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <input type="text" name="name" onChange={handleInputChange} placeholder="YOUR NAME"
+                  className="w-full bg-transparent border-b border-stone-200 dark:border-stone-800 py-4 text-sm font-bold tracking-[0.2em] placeholder-stone-300 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100 transition-colors uppercase"
+                />
+                <input type="email" name="email" onChange={handleInputChange} placeholder="EMAIL ADDRESS"
+                  className="w-full bg-transparent border-b border-stone-200 dark:border-stone-800 py-4 text-sm font-bold tracking-[0.2em] placeholder-stone-300 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100 transition-colors uppercase"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="block text-gray-500 text-lg">Your Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Enter your email"
-                  className="w-full bg-transparent border-b border-gray-200 dark:border-gray-700 py-4 text-xl text-gray-900 dark:text-white placeholder-gray-300 focus:outline-none focus:border-black dark:focus:border-white transition-colors"
-                  required
-                />
-              </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="block text-gray-500 text-lg">
-                Project Details ( Optional )
-              </label>
-              <textarea
-                name="projectDetails"
-                value={formData.projectDetails}
-                onChange={handleInputChange}
-                placeholder="A Very cool Animation..."
-                rows={1}
-                className="w-full bg-transparent border-b border-gray-200 dark:border-gray-700 py-4 text-xl text-gray-900 dark:text-white placeholder-gray-300 focus:outline-none focus:border-black dark:focus:border-white transition-colors resize-none"
+              <textarea name="projectDetails" onChange={handleInputChange} placeholder="TELL US ABOUT THE PROJECT..." rows={1}
+                className="w-full bg-transparent border-b border-stone-200 dark:border-stone-800 py-4 text-sm font-bold tracking-[0.2em] placeholder-stone-300 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100 transition-colors resize-none uppercase"
               />
-            </div>
 
-            {/* Submit Button */}
-            <div className="flex justify-end pt-8 w-full">
-              <button
-                ref={buttonRef}
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 rounded-full bg-black dark:bg-white text-white dark:text-black font-bold text-lg flex items-center justify-center hover:opacity-80 transition-opacity duration-300 disabled:opacity-70"
+              <button type="submit" disabled={isSubmitting}
+                className="w-full group flex items-center justify-between py-6 px-10 rounded-full bg-black dark:bg-white text-white dark:text-black transition-all hover:scale-[0.98] active:scale-95 disabled:opacity-50"
               >
-                {isSubmitting ? (
-                  <span className="animate-pulse">Sending...</span>
-                ) : (
-                  "Send"
-                )}
+                <span className="text-xs font-black tracking-[0.4em] uppercase">
+                  {isSubmitting ? "SENDING..." : "SUBMIT REQUEST"}
+                </span>
+                <div className="w-10 h-10 rounded-full bg-white/20 dark:bg-black/10 flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
+                  <ArrowUpRight size={20} />
+                </div>
               </button>
-            </div>
-          </form>
+            </form>
+          </div>
+
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

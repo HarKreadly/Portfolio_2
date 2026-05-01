@@ -251,7 +251,7 @@ const Skills = () => {
 
       <section
         ref={containerRef}
-        className="relative bg-white dark:bg-[#0a0a0a] text-black dark:text-white overflow-hidden"
+        className="relative bg-stone-200 dark:bg-zinc-900 text-black dark:text-white overflow-hidden"
       >
         <div ref={triggerRef} className="h-screen w-full flex overflow-hidden">
           
@@ -275,7 +275,7 @@ const Skills = () => {
             {CHAPTERS.map((chapter, chapterIndex) => (
               <div
                 key={chapter.id}
-                className={`scene-${chapter.id} absolute inset-0 flex flex-col bg-white dark:bg-[#0a0a0a]`}
+                className={`scene-${chapter.id} absolute inset-0 flex flex-col bg-stone-100 dark:bg-zinc-950`}
               >
               {/* scene-content centered vertically */}
               <div className="scene-content w-full max-w-[1400px] mx-auto flex flex-col justify-center flex-1 px-8 md:px-16 py-20 gap-8 h-full">
@@ -347,7 +347,7 @@ const Skills = () => {
           </div>
 
         {/* ── Right sidebar Area ── */}
-        <div className="w-12 md:w-14 bg-zinc-800 dark:bg-zinc-100 flex flex-col items-center py-8 relative z-40 h-full">
+        <div className="w-12 md:w-14 bg-zinc-800 dark:bg-zinc-200 flex flex-col items-center py-8 relative z-40 h-full">
 
           {/* Icon */}
           <div className="mb-10">

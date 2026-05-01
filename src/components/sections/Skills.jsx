@@ -164,6 +164,13 @@ const Skills = () => {
         },
       });
 
+      // Initially hide all scenes except the first one
+      CHAPTERS.forEach((chapter, index) => {
+        if (index > 0) {
+          gsap.set(`.scene-${chapter.id}`, { x: "100%" });
+        }
+      });
+
       CHAPTERS.forEach((chapter, index) => {
         const sceneSel   = `.scene-${chapter.id}`;
         const contentSel = `${sceneSel} .scene-content`;
@@ -245,65 +252,32 @@ const Skills = () => {
         ref={containerRef}
         className="relative bg-white dark:bg-[#0a0a0a] text-black dark:text-white overflow-hidden"
       >
-        <div ref={triggerRef} className="h-screen w-full relative">
-
-          {/* ── Top nav ── Corrected to not overlap sidebar ── */}
-          <div className="absolute top-12 left-0 w-full pr-12 md:pr-14 px-8 md:px-16 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 text-black dark:text-white">
-            <div className="flex flex-col leading-tight font-black font-serif text-lg">
-              <span>BASE</span>
-              <span>HOME</span>
-            </div>
-            <div className="hidden md:flex items-center gap-16">
-              <span className="hover:opacity-50 cursor-pointer transition-opacity">HOME SCREEN</span>
-              <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">MY SKILLS</span>
-              <span className="hover:opacity-50 cursor-pointer transition-opacity">ABOUT ME</span>
-            </div>
-          </div>
-
-          {/* ── Right sidebar ── */}
-          <div className="absolute right-0 top-0 h-full w-12 md:w-14 bg-black z-40 flex flex-col items-center py-8">
-            {/* Hamburger */}
-            <div className="flex flex-col gap-[5px] mb-10">
-              <span className="w-5 h-[2px] bg-white block" />
-              <span className="w-5 h-[2px] bg-white block" />
-              <span className="w-5 h-[2px] bg-white block" />
+        <div ref={triggerRef} className="h-screen w-full flex overflow-hidden">
+          
+          {/* ── Content Area ── */}
+          <div className="flex-1 relative">
+            
+            {/* ── Top nav ── */}
+            <div className="absolute top-12 left-0 w-full px-8 md:px-16 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 text-black dark:text-white">
+              <div className="flex flex-col leading-tight font-black font-serif text-lg">
+                <span>BASE</span>
+                <span>HOME</span>
+              </div>
+              <div className="hidden md:flex items-center gap-16">
+                <span className="hover:opacity-50 cursor-pointer transition-opacity">HOME SCREEN</span>
+                <span className="hover:opacity-50 cursor-pointer transition-opacity border-b border-black dark:border-white pb-1">MY SKILLS</span>
+                <span className="hover:opacity-50 cursor-pointer transition-opacity">ABOUT ME</span>
+              </div>
             </div>
 
-            <div className="flex-1 flex flex-col items-center justify-center gap-20">
-              {SIDEBAR_CATEGORIES.map((label, i) => {
-                const isActive   = i === CHAPTERS[activeChapter]?.sidebarIndex;
-                const hasChapter = CHAPTERS.some((c) => c.sidebarIndex === i);
-
-                return (
-                  <span
-                    key={label}
-                    onClick={() => scrollToChapter(i)}
-                    className={`rotate-90 text-[10px] font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-all duration-500 ${
-                      hasChapter
-                        ? "cursor-pointer hover:text-white"
-                        : "opacity-20 pointer-events-none"
-                    }`}
-                    style={{
-                      color:         isActive ? "#fff" : "rgba(255,255,255,0.25)",
-                      letterSpacing: isActive ? "0.3em" : "0.2em",
-                    }}
-                  >
-                    {label}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* ── Chapters ── */}
-          {CHAPTERS.map((chapter, chapterIndex) => (
-            <div
-              key={chapter.id}
-              className={`scene-${chapter.id} absolute inset-0 flex flex-col pr-12 md:pr-14 bg-white dark:bg-[#0a0a0a]`}
-              style={{ transform: chapterIndex === 0 ? "none" : "translateX(100%)" }}
-            >
-              {/* scene-content animates up/down */}
-              <div className="scene-content w-full max-w-[1400px] mx-auto flex flex-col flex-1 px-8 md:px-16 pt-32 pb-8 gap-8">
+            {/* ── Chapters ── */}
+            {CHAPTERS.map((chapter, chapterIndex) => (
+              <div
+                key={chapter.id}
+                className={`scene-${chapter.id} absolute inset-0 flex flex-col bg-white dark:bg-[#0a0a0a]`}
+              >
+              {/* scene-content centered vertically */}
+              <div className="scene-content w-full max-w-[1400px] mx-auto flex flex-col justify-center flex-1 px-8 md:px-16 py-20 gap-8 h-full">
 
                 {/* ── Hero row: image LEFT + title RIGHT ── */}
                 <div className="flex flex-col lg:flex-row gap-10 items-center">
@@ -369,6 +343,42 @@ const Skills = () => {
               </div>
             </div>
           ))}
+          </div>
+
+          {/* ── Right sidebar Area ── */}
+          <div className="w-12 md:w-14 bg-black flex flex-col items-center py-8 relative z-40 h-full">
+            {/* Hamburger */}
+            <div className="flex flex-col gap-[5px] mb-10">
+              <span className="w-5 h-[2px] bg-white block" />
+              <span className="w-5 h-[2px] bg-white block" />
+              <span className="w-5 h-[2px] bg-white block" />
+            </div>
+
+            <div className="flex-1 flex flex-col items-center justify-center gap-20">
+              {SIDEBAR_CATEGORIES.map((label, i) => {
+                const isActive   = i === CHAPTERS[activeChapter]?.sidebarIndex;
+                const hasChapter = CHAPTERS.some((c) => c.sidebarIndex === i);
+
+                return (
+                  <span
+                    key={label}
+                    onClick={() => scrollToChapter(i)}
+                    className={`rotate-90 text-[10px] font-bold tracking-[0.2em] uppercase whitespace-nowrap transition-all duration-500 ${
+                      hasChapter
+                        ? "cursor-pointer hover:text-white"
+                        : "opacity-20 pointer-events-none"
+                    }`}
+                    style={{
+                      color:         isActive ? "#fff" : "rgba(255,255,255,0.25)",
+                      letterSpacing: isActive ? "0.3em" : "0.2em",
+                    }}
+                  >
+                    {label}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
 
         </div>
       </section>

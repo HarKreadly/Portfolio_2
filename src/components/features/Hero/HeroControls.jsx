@@ -66,12 +66,12 @@ const HeroControls = ({
             Speed
           </span>
           <div className="text-sm tracking-[0.5em] text-gray-500 dark:text-gray-500 font-light flex gap-4">
-            {[16, 8, 4, 2].map((num) => (
+            {[12, 8, 6, 4].map((num) => (
               <button
                 key={num}
-                onClick={() => setAutoPlaySpeed(num)}
+                onClick={() => setAutoPlaySpeed(num * 1000)}
                 className={`transition-colors hover:text-black dark:hover:text-white ${
-                  autoPlaySpeed === num
+                  autoPlaySpeed === num * 1000
                     ? "text-black dark:text-white font-bold"
                     : ""
                 }`}
@@ -133,12 +133,12 @@ const HeroControls = ({
             Speed
           </span>
           <div className="text-sm tracking-[0.3em] text-gray-500 dark:text-gray-500 font-light flex gap-3 justify-center">
-            {[16, 8, 4, 2].map((num) => (
+            {[12, 8, 6, 4].map((num) => (
               <button
                 key={num}
-                onClick={() => setAutoPlaySpeed(num)}
+                onClick={() => setAutoPlaySpeed(num * 1000)}
                 className={`transition-colors hover:text-black dark:hover:text-white ${
-                  autoPlaySpeed === num
+                  autoPlaySpeed === num * 1000
                     ? "text-black dark:text-white font-bold"
                     : ""
                 }`}

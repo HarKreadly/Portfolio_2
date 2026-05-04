@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { projects } from "../../data/projects";
-import ProjectCard from "../ui/ProjectCard";
+import { projects } from "../data/projects";
+import ProjectCard from "../components/ui/ProjectCard";
 
-const Projects = () => {
+const ProjectsSection = () => {
   const scrollContainerRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(1);
   const totalSlides = projects.length;
@@ -12,9 +12,11 @@ const Projects = () => {
     if (scrollContainerRef.current) {
       // Use dynamic card width if available, otherwise fallback to reasonable default
       const card = scrollContainerRef.current.children[0];
-      const scrollAmount = card 
+      const scrollAmount = card
         ? (card.offsetWidth + 32) * (direction === "left" ? -1 : 1)
-        : (direction === "left" ? -450 : 450);
+        : direction === "left"
+          ? -450
+          : 450;
 
       scrollContainerRef.current.scrollBy({
         left: scrollAmount,
@@ -48,7 +50,7 @@ const Projects = () => {
       if (scrollContainerRef.current) {
         const container = scrollContainerRef.current;
         const { scrollLeft, scrollWidth, clientWidth } = container;
-        
+
         // The width of a single set of projects
         const singleSetWidth = scrollWidth / 3;
 
@@ -74,7 +76,7 @@ const Projects = () => {
             closestIndex = i;
           }
         }
-        
+
         // Map the index back to the 1..totalSlides range (modulating by totalSlides)
         const normalizedIndex = (closestIndex % totalSlides) + 1;
         if (!isNaN(normalizedIndex)) setCurrentSlide(normalizedIndex);
@@ -86,7 +88,7 @@ const Projects = () => {
       // Start in the middle set for seamless initial scroll in both directions
       const initialScroll = container.scrollWidth / 3;
       container.scrollTo({ left: initialScroll, behavior: "auto" });
-      
+
       container.addEventListener("scroll", handleScroll);
       // Run once to set initial state
       handleScroll();
@@ -137,7 +139,7 @@ const Projects = () => {
       <div className="relative z-10 w-full mt-8">
         {/* Left Fading Edge */}
         <div className="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-zinc-50 dark:from-zinc-950 to-transparent z-20 pointer-events-none"></div>
-        
+
         {/* Right Fading Edge */}
         <div className="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-zinc-50 dark:from-zinc-950 to-transparent z-20 pointer-events-none"></div>
 
@@ -166,15 +168,17 @@ const Projects = () => {
             // Determine focus for the "3 middle pictures"
             // We use the raw index compared to the visual center (which we track via currentSlide logic internally)
             // But since currentSlide is normalized, we need a way to check focus on the triple list
-            
+
             // Simpler: Calculate focus based on distance from viewport center directly in render is hard,
             // so we'll use a CSS-based approach or a state-driven approach.
             // Let's use the currentSlide and a "virtual" index.
-            
-            const normalizedActiveIndex = (currentSlide - 1);
-            const isItemActive = (index % totalSlides) === normalizedActiveIndex;
-            const isNeighbor = Math.abs((index % totalSlides) - normalizedActiveIndex) <= 1 || 
-                               Math.abs((index % totalSlides) - normalizedActiveIndex) === totalSlides - 1;
+
+            const normalizedActiveIndex = currentSlide - 1;
+            const isItemActive = index % totalSlides === normalizedActiveIndex;
+            const isNeighbor =
+              Math.abs((index % totalSlides) - normalizedActiveIndex) <= 1 ||
+              Math.abs((index % totalSlides) - normalizedActiveIndex) ===
+                totalSlides - 1;
 
             return (
               <div
@@ -223,4 +227,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectsSection;

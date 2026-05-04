@@ -1,23 +1,20 @@
-import About from '../components/sections/About';
-import HeroSection from '../components/sections/HeroSection';
-import Skills from '../components/sections/Skills';
-import Projects from '../components/sections/Projects';
-import Contact from '../components/sections/Contact';
-import About2 from '../components/sections/About2';
-import FAQSection from '@/components/sections/FAQSection';
+import HeroSection from "../sections/HeroSection";
+import SkillsSection from "../sections/SkillsSection";
+import ProjectsSection from "../sections/ProjectsSection";
+import ContactSection from "../sections/ContactSection";
+import AboutSection from "../sections/AboutSection";
+import FAQSection from "@/sections/FAQSection";
 
 const Home = () => {
   return (
     <div className="min-h-screen">
       <main>
         <HeroSection />
-        {/* <About /> */}
-        <About2 />
-        <Skills />
-        <Projects />
-        <Contact />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ContactSection />
         <FAQSection />
-        {/* <Contact2 /> */}
       </main>
     </div>
   );

@@ -57,7 +57,7 @@ function App() {
           <Route path="/error" element={<Error404/>} />
           {/* Add more routes as needed */}
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
         <ClickSpark
           sparkColor="#fff"
           sparkSize={10}

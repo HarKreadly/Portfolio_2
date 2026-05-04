@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail, Heart, Instagram, Twitter, ArrowUpRight, Code2, Globe, Sparkles } from "lucide-react";
 import image2 from "../../assets/image_2.jpg";
+import logo from "../../assets/HK.svg";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,9 +26,8 @@ const Footer = () => {
           {/* Card 1: The Site Identity */}
           <div className="backdrop-blur-xl bg-white/40 dark:bg-white/5 border border-white/40 dark:border-white/10 rounded-[2.5rem] p-8 flex flex-col justify-between">
             <div>
-              <div className="flex flex-col leading-none font-black font-serif text-xl mb-6 tracking-tighter text-stone-900 dark:text-white">
-                <span>PORT</span>
-                <span>FOLIO</span>
+              <div className="flex flex-col mb-6">
+                <img src={logo} alt="HK Logo" className="w-12 h-12 dark:invert transition-all" />
               </div>
               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-500 leading-relaxed">
                 A digital studio at the intersection of English pedagogy and creative engineering.

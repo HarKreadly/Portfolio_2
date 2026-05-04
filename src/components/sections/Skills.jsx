@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import SkillShowcase from "../features/Skills/SkillShowcase";
 import { HiMenuAlt1 } from "react-icons/hi";
+import logo from "../../assets/HK.svg";
 
 // Import images from assets
 import img1 from "../../assets/image_1.jpg";
@@ -260,9 +261,8 @@ const Skills = () => {
             
             {/* ── Top nav ── */}
             <div className="absolute top-12 left-0 w-full px-8 md:px-16 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 text-black dark:text-white">
-              <div className="flex flex-col leading-tight font-black font-serif text-lg">
-                <span>BASE</span>
-                <span>HOME</span>
+              <div className="flex items-center gap-3">
+                <img src={logo} alt="HK Logo" className="w-10 h-10 dark:invert opacity-80" />
               </div>
               <div className="hidden md:flex items-center gap-16">
                 <span className="hover:opacity-50 cursor-pointer transition-opacity">ABOUT ME</span>

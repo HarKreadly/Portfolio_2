@@ -16,6 +16,7 @@ import HeroInfo from "../features/Hero/HeroInfo";
 import CVModal from "../features/Hero/modals/CVModal";
 import MenuModal from "../features/Hero/modals/MenuModal";
 import { slides } from "../../data/heroSlides";
+import logo from "../../assets/HK.svg";
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -136,7 +137,11 @@ const HeroSection = () => {
 
       {/* Header Navigation */}
       <nav className="absolute top-0 left-0 w-full p-4 md:p-8 flex justify-between items-center z-20 text-sm tracking-widest text-gray-400">
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-8">
+          {/* <div className="flex items-center gap-3">
+             <img src={logo} alt="HK Logo" className="w-10 h-10 dark:invert opacity-80" />
+          </div>
+          <div className="h-8 w-px bg-gray-200 dark:bg-white/20"></div> */}
           <div
             className="flex gap-3 items-center cursor-pointer group"
             onClick={() => setIsMenuModal(true)}

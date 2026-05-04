@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { personalStory } from "../../data/about.js";
 import { ChevronLeft, ChevronRight, Eye, Heart } from "lucide-react";
+import logo from "../../assets/HK.svg";
 
 const About2 = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -56,9 +57,8 @@ const About2 = () => {
       >
       {/* Header Navigation (Simulated from reference) */}
       <div className="absolute top-12 left-0 w-full px-8 md:px-16 flex justify-between items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 text-black dark:text-white">
-        <div className="flex flex-col leading-tight font-black font-serif text-lg">
-          <span>BASE</span>
-          <span>HOME</span>
+        <div className="flex items-center gap-3">
+          <img src={logo} alt="HK Logo" className="w-10 h-10 dark:invert opacity-80" />
         </div>
         <div className="hidden md:flex items-center gap-16">
           <span className="hover:opacity-50 cursor-pointer transition-opacity">HOME SCREEN</span>

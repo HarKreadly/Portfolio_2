@@ -233,7 +233,11 @@ const CardNav = ({
           </div>
 
           <div className="logo-container flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-0">
-            <h2 className="font-bold">Portfolio</h2>
+            {logo ? (
+              <img src={logo} alt={logoAlt} className="h-8 w-auto dark:invert transition-all" />
+            ) : (
+              <h2 className="font-bold">Portfolio</h2>
+            )}
           </div>
 
           {/* Theme, Language, and Search Controls */}
